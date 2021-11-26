@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     root to: "devise/sessions#new"
   end
 
+  get 'poll/new' => 'poll#new'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
