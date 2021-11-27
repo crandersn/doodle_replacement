@@ -1,9 +1,37 @@
-<div style="position: absolute; width: 100%; height: 100%;">
-  <div id="calendar" style="height: 100%; width: 100%;"></div>
-</div>
+<h1 style="text-align: center">Create New Poll</h1>
 
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "MindFusion.Scheduling.js" %>
-  <%= javascript_include_tag "doodle_replacement.js" %>
-  <%= javascript_include_tag "TimeForm.js" %>
-<% end %>
+<div class="row">
+  <div class = "col-md-4 col-md-offset-4">
+    <%= form_tag '/poll/choose_time_slots', method: :post do %>
+
+      <div class="field form-group">
+        <%= label_tag :title, "Title" %><br />
+        <%= text_field_tag :title, "", :class => 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= label_tag :location, "Location" %>
+        <%= text_field_tag :location, "", :class => 'form-control' %>
+      </div>
+
+      <div class="field form-group">
+        <%= label_tag :votes_per_timeslot, "Maximum Number of Votes Per Time Slot" %>
+        <%= text_field_tag :votes_per_timeslot, "", :class => 'form-control', type: "number" %>
+      </div>
+
+      <div class="field form-group">
+        <%= label_tag :votes_per_person, "Maximum Number of Votes Per Person" %>
+        <%= text_field_tag :votes_per_person, "", :class => 'form-control', type: "number" %>
+      </div>
+
+      <div class="field form-group">
+        <%= label_tag :notes, "Notes" %><br />
+        <%= text_area_tag :notes, nil, size: "70x5", class: "md-textarea form-control"%>
+      </div>
+
+      <div class="actions">
+        <%= button_tag "Choose Time Slots", :class => 'btn btn-primary form-control' %>
+      </div>
+    <% end %>
+  </div>
+</div>

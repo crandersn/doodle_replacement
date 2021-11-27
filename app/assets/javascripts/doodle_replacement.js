@@ -39,15 +39,13 @@ calendar.itemDoubleClick.addEventListener(handleItemDoubleClick);
 // handle the selectionEnd event to show the custom form for item creation
 calendar.selectionEnd.addEventListener(handleSelectionEnd);
 
-function handleItemDoubleClick(sender, args)
-{
+function handleItemDoubleClick(sender, args) {
 	// create and show the custom form
 	var form = new TimeForm(sender, args.item, "edit");
 	form.showForm();
 }
 
-function handleSelectionEnd(sender, args)
-{
+function handleSelectionEnd(sender, args)  {
 	// create a new item with the start and end time of the selection
 	var item = new p.Item();
 	item.startTime = args.startTime;
@@ -56,6 +54,36 @@ function handleSelectionEnd(sender, args)
 	// create and show the custom form
 	var form = new TimeForm(sender, item, "new");
 	form.showForm();
+}
+
+function submitPoll() {
+
+    var pollData = {}
+    var numAppointments = 0
+
+    appointments = calendar.schedule.items.forEach(function(item, index){
+
+        startTimeString = item.startTime.__toUTCString();
+        endTimeString = item.endTime.__toUTCString();
+        subject = item.subject;
+
+        var appointment = {};
+        appointment["start_time"] = startTimeString;
+        appointment["end_time"] = endTimeString;
+        appointment["subject"] = subject
+
+        pollData[index] = appointment;
+        numAppointments += 1;
+
+        // console.log((new Date(item.startTime.__toUTCString())).toString())
+        // console.log(item.startTime.__toString())
+    });
+
+    pollData["num_appointments"] = numAppointments
+
+    $.post("/poll/create", pollData, function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+    });
 }
 
 // render the calendar control
