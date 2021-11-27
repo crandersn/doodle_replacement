@@ -213,9 +213,8 @@ TimeForm.prototype.onSaveButtonClick = function (e) {
     var startIndex = +this.getControlValue("start_time");
     var endIndex = +this.getControlValue("end_time");
 
+    // reduce num appointments if necessary
     var numAppointments = +this.getControlValue("num_appointments");
-
-
     if (numAppointments > (endIndex - startIndex))
         numAppointments = endIndex - startIndex
 
@@ -223,6 +222,7 @@ TimeForm.prototype.onSaveButtonClick = function (e) {
 
     var startTime = this.item.startTime.date.clone().addHours(startIndex * 0.5);
 
+    // create all necessary appointments
     for (i = 0; i < numAppointments; i++) {
 
         // compute end time of appointment one
@@ -238,23 +238,6 @@ TimeForm.prototype.onSaveButtonClick = function (e) {
         startTime = endAppointmentTime
 
     }
-
-
-     // if end time is specified, decrease it by one day
-    //if (endIndex != 0 && this.item.endTime.hour == 0)
-     //   endTime.addDays(-1);
-
-     // check for inconsistent start/end time
-    //if (startTime.valueOf() > endTime.valueOf())
-    //    endTime = startTime.clone().addHours(1);
-
-     // apply changes
-    //this.item.subject = this.getControlValue("subject");
-    //this.item.startTime = startTime;
-    //this.item.endTime = endTime;
-
-    // if a new item is created, add it to the schedule.items collection
-    // if (this.type === "new")
 
      // close the form
     this.closeForm();
