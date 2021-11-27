@@ -1,8 +1,7 @@
 var p = MindFusion.Scheduling;
 var hoursList;
 
-var TimeForm = function (calendar, item, type)
-{
+var TimeForm = function (calendar, item, type) {
 	p.BaseForm.call(this, calendar, item);
 
 	this._id = "TimeForm";
@@ -14,8 +13,7 @@ var TimeForm = function (calendar, item, type)
 TimeForm.prototype = Object.create(p.BaseForm.prototype);
 TimeForm.prototype.constructor = TimeForm;
 
-TimeForm.prototype.drawContent = function ()
-{
+TimeForm.prototype.drawContent = function () {
 	p.BaseForm.prototype.drawContent.call(this);
 
 	var content = this.getContent();
@@ -57,24 +55,55 @@ TimeForm.prototype.drawContent = function ()
 	this.addControl(control);
 
 	row = this.row();
-	row.style.margin = "0px 0px 30px 0px";
+	//row.style.margin = "0px 0px 30px 0px";
 	row.appendChild(control.element);
 	content.appendChild(row);
+
+    // create a drop-down list for number of time slots
+    row = this.row();
+    row.innerHTML = "Number of Appointments";
+    content.appendChild(row);
+
+    var item = this.item;
+    control = this.createDropDownList({ id: "num_appointments", items: this.getIntervalLabels(), initValue: { value: 1, text: "1 Time Slot" },  addEmptyValue: false});
+    control.element.style.width = "200px";
+    this.addControl(control);
+
+    row = this.row();
+    row.style.margin = "0px 0px 30px 0px";
+    row.appendChild(control.element);
+    content.appendChild(row);
 
 	return content;
 };
 
+
+// create a list of labels for the number of meetings you want in the selected timespan.
+TimeForm.prototype.getIntervalLabels = function () {
+
+
+    intervalsList = [];
+    intervalsList.push({ value: 1, text: "1 Appointment" });
+
+    let index = 1;
+
+    for(var i = 2; i < 11; i++)
+    {
+        intervalsList.push({ value: index+1, text: i.toString() + " Appointments" });
+        index += 1;
+    }
+    return intervalsList;
+}
+
 // create an array of objects to fill the hours drop-down
-TimeForm.prototype.getHourLabels = function ()
-{
+TimeForm.prototype.getHourLabels = function () {
 	hoursList = [];
 	hoursList.push({ value: 0, text: "12:00am" });
 	hoursList.push({ value: 1, text: "12:30am" });
 
 	let index = 1;
 
-	for(var i = 1; i < 12; i++)
-	{
+	for(var i = 1; i < 12; i++) {
 		hoursList.push({ value: index+1, text: i.toString() + ":00am" });
 	    hoursList.push({ value: index+2, text: i.toString() + ":30am" });
 
@@ -87,8 +116,7 @@ TimeForm.prototype.getHourLabels = function ()
 
 	index += 2;
 
-	for(i = 1; i < 12; i++)
-	{
+	for(i = 1; i < 12; i++) {
 		hoursList.push({ value: index+1, text: i.toString() + ":00pm" });
 	    hoursList.push({ value: index+2, text: i.toString() + ":30pm" });
 
@@ -99,8 +127,7 @@ TimeForm.prototype.getHourLabels = function ()
 }
 
 // get the index of the current item's rank to set the value of the Ranks drop-down
-TimeForm.prototype.getStartTimeIndex = function ()
-{
+TimeForm.prototype.getStartTimeIndex = function () {
 	if (this.item != null && this.item.startTime != null)
 	{
 
@@ -113,14 +140,12 @@ TimeForm.prototype.getStartTimeIndex = function ()
 	return -1;
 }
 
-TimeForm.prototype.getSubject = function()
-{
+TimeForm.prototype.getSubject = function() {
 		return this.item.subject;
 }
 
 // get the index of the current item's rank to set the value of the Ranks drop-down
-TimeForm.prototype.getEndTimeIndex = function ()
-{
+TimeForm.prototype.getEndTimeIndex = function () {
 	if (this.item != null && this.item.endTime != null)
 	{
 		let hours = this.item.endTime.__getHours();
@@ -138,8 +163,7 @@ TimeForm.prototype.getEndTimeIndex = function ()
 }
 
 // override BaseForm's drawButtons method to create form buttons
-TimeForm.prototype.drawButtons = function ()
-{
+TimeForm.prototype.drawButtons = function () {
 	var thisObj = this;
 
 	var btnSave = this.createButton({
@@ -162,50 +186,89 @@ TimeForm.prototype.drawButtons = function ()
 		}
 	});
 
+    var btnDelete = this.createButton({
+        id: "btnDelete",
+        text: this.localInfo.deleteButtonCaption,
+        events: { click: function click(e)
+            {
+                return thisObj.onDeleteButtonClick(e);
+            }
+        }
+    });
+
 	var buttons = this.row();
 	buttons.classList.add("mfp-buttons-row");
 	buttons.appendChild(btnSave.element);
 	buttons.appendChild(btnCancel.element);
+	buttons.appendChild(btnDelete.element);
 
 	return buttons;
 };
 
-TimeForm.prototype.onSaveButtonClick = function (e)
-{
-	// update the item with the form data
-	 // update the item with the form data
- var startIndex = +this.getControlValue("start_time");
- var startTime = this.item.startTime.date.clone().addHours(startIndex * 0.5);
+TimeForm.prototype.onSaveButtonClick = function (e) {
 
- var endIndex = +this.getControlValue("end_time");
- var endTime = this.item.endTime.date.clone().addHours(endIndex * 0.5);
+    // remove original item from calendar
+    this.calendar.schedule.items.remove(this.item);
 
- // if end time is specified, decrease it by one day
- if (endIndex != 0 && this.item.endTime.hour == 0)
-  endTime.addDays(-1);
+    var startIndex = +this.getControlValue("start_time");
+    var endIndex = +this.getControlValue("end_time");
 
- // check for inconsistent start/end time
- if (startTime.valueOf() > endTime.valueOf())
-         endTime = startTime.clone().addHours(1);
+    var numAppointments = +this.getControlValue("num_appointments");
 
- // apply changes
- this.item.subject = this.getControlValue("subject");
- this.item.startTime = startTime;
- this.item.endTime = endTime;
 
- // if a new item is created, add it to the schedule.items collection
- if (this.type === "new")
-  this.calendar.schedule.items.add(this.item);
+    if (numAppointments > (endIndex - startIndex))
+        numAppointments = endIndex - startIndex
 
- // close the form
- this.closeForm();
+    var appointmentLength = Math.floor((endIndex - startIndex)/numAppointments)
 
- // repaint the calendar
- this.calendar.repaint(true);
+    var startTime = this.item.startTime.date.clone().addHours(startIndex * 0.5);
+
+    for (i = 0; i < numAppointments; i++) {
+
+        // compute end time of appointment one
+        var endAppointmentTime = startTime.clone().addHours(appointmentLength * 0.5);
+
+        // add new appointment to calendar
+        var calendarItem = this.item.clone();
+        calendarItem.startTime = startTime;
+        calendarItem.endTime = endAppointmentTime;
+        calendarItem.subject = this.getControlValue("subject");
+        this.calendar.schedule.items.add(calendarItem);
+
+        startTime = endAppointmentTime
+
+    }
+
+
+     // if end time is specified, decrease it by one day
+    //if (endIndex != 0 && this.item.endTime.hour == 0)
+     //   endTime.addDays(-1);
+
+     // check for inconsistent start/end time
+    //if (startTime.valueOf() > endTime.valueOf())
+    //    endTime = startTime.clone().addHours(1);
+
+     // apply changes
+    //this.item.subject = this.getControlValue("subject");
+    //this.item.startTime = startTime;
+    //this.item.endTime = endTime;
+
+    // if a new item is created, add it to the schedule.items collection
+    // if (this.type === "new")
+
+     // close the form
+    this.closeForm();
+
+     // repaint the calendar
+    this.calendar.repaint(true);
 };
 
-TimeForm.prototype.onCancelButtonClick = function (e)
-{
-	// close the form
+TimeForm.prototype.onCancelButtonClick = function (e) {
 	this.closeForm();
+};
+
+TimeForm.prototype.onDeleteButtonClick = function (e)  {
+    this.calendar.schedule.items.remove(this.item);
+    this.calendar.repaint(true);
+    this.closeForm();
 };
