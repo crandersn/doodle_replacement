@@ -13,6 +13,8 @@ class PollController < ApplicationController
     flash[:votes_per_person] = params[:votes_per_person]
     flash[:notes] = params[:notes]
 
+    @time_zone = params[:time_zone]
+
   end
 
   def create

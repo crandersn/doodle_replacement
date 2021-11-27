@@ -61,10 +61,28 @@ function submitPoll() {
     var pollData = {}
     var numAppointments = 0
 
+    var selected_time_zone = $('.time_zone_info').data('time_zone')
+
+    var time_zone_offsets = {
+        "Pacific": "8",
+        "Mountain": "7",
+        "Central": "6",
+        "Eastern": "5"
+    }
+
     appointments = calendar.schedule.items.forEach(function(item, index){
 
-        startTimeString = item.startTime.__toUTCString();
-        endTimeString = item.endTime.__toUTCString();
+        var time_adjustment = 0;
+
+        if (selected_time_zone != "My Time Zone") {
+            var current_time_zone_offest = (item.startTime.__getTimezoneOffset())/60;
+            var selected_time_zone_offset = time_zone_offsets[selected_time_zone];
+            time_adjustment = selected_time_zone_offset - current_time_zone_offest
+        }
+
+        // shift time depending on the time zone selected by the user
+        startTimeString = (item.startTime.addHours(time_adjustment)).__toUTCString();
+        endTimeString = (item.endTime.addHours(time_adjustment)).__toUTCString();
         subject = item.subject;
 
         var appointment = {};

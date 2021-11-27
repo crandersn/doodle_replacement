@@ -15,17 +15,27 @@
       </div>
 
       <div class="field form-group">
-        <%= label_tag :votes_per_timeslot, "Maximum Number of Votes Per Time Slot" %>
+        <%= label_tag :time_zone, "Time Zone" %>
+        <%= select_tag :time_zone, options_for_select([ "My Time Zone" ,"Pacific", "Mountain", "Central", "Eastern"], "My Time Zone"), :class => 'form-control' %>
+      </div>
+
+      <div>
+        <%= label_tag :votes_per_timeslot, "Poll Expiration Date (Optional)" %>
+        <%= text_field_tag :votes_per_timeslot, "", :class => 'form-control', type: "date" %>
+      </div>
+
+      <div class="field form-group">
+        <%= label_tag :votes_per_timeslot, "Maximum Number of Votes Per Time Slot (Optional)" %>
         <%= text_field_tag :votes_per_timeslot, "", :class => 'form-control', type: "number" %>
       </div>
 
       <div class="field form-group">
-        <%= label_tag :votes_per_person, "Maximum Number of Votes Per Person" %>
+        <%= label_tag :votes_per_person, "Maximum Number of Votes Per Person (Optional)" %>
         <%= text_field_tag :votes_per_person, "", :class => 'form-control', type: "number" %>
       </div>
 
       <div class="field form-group">
-        <%= label_tag :notes, "Notes" %><br />
+        <%= label_tag :notes, "Notes (Optional)" %><br />
         <%= text_area_tag :notes, nil, size: "70x5", class: "md-textarea form-control"%>
       </div>
 
