@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211126173837) do
+ActiveRecord::Schema.define(version: 20211127221641) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -26,16 +26,27 @@ ActiveRecord::Schema.define(version: 20211126173837) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
 
+  create_table "invitees", force: :cascade do |t|
+    t.string  "phone_number"
+    t.integer "poll_id"
+  end
+
   create_table "polls", force: :cascade do |t|
     t.string  "poll_name"
     t.string  "poll_description"
     t.string  "meeting_location"
+    t.string  "deadline"
+    t.string  "status"
     t.integer "admin_id"
+  end
+
+  create_table "reservers", force: :cascade do |t|
+    t.string  "name"
+    t.integer "timeslot_id"
   end
 
   create_table "timeslots", force: :cascade do |t|
     t.boolean "available"
-    t.string  "name_of_scheduler"
     t.string  "date"
     t.string  "start_time"
     t.integer "duration"

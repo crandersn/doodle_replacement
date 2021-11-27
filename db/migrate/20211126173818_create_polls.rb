@@ -4,6 +4,8 @@ class CreatePolls < ActiveRecord::Migration
       t.string :poll_name
       t.string :poll_description
       t.string :meeting_location
+      t.string :deadline
+      t.string :status
       t.references :admin
     end
   end
