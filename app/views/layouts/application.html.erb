@@ -10,9 +10,11 @@
 
 
 <% flash.each do |type, msg| %>
-  <div class="alert alert-info">
-    <%= msg %>
-  </div>
+  <% if type == :alert or type == :info %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% end %>
 <% end %>
 <%= yield %>
 <%= yield :javascript_includes %>

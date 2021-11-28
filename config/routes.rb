@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     root to: "devise/sessions#new"
   end
 
+  # define poll controller routes
   get 'poll/new' => 'poll#new'
+  post 'poll/choose_time_slots' => 'poll#choose_time_slots'
+  post 'poll/create' => 'poll#create'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
