@@ -1,0 +1,9 @@
+<div style="position: absolute; width: 100%; height: 100%;">
+  <div id="calendar" style="height: 100%; width: 100%;"></div>
+</div>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "MindFusion.Scheduling.js" %>
+  <%= javascript_include_tag "doodle_replacement.js" %>
+  <%= javascript_include_tag "TimeForm.js" %>
+<% end %>
