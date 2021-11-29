@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     root to: "devise/sessions#new"
   end
 
+  # admin homepage
+  get 'admin/homepage', as: :admin_root
+
   # define poll controller routes
   get 'poll/new' => 'poll#new'
   post 'poll/choose_time_slots' => 'poll#choose_time_slots'
