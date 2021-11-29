@@ -12,37 +12,35 @@ function validateNewPollForm () {
     currentDate = new Date(parseInt(currentDate.getFullYear()), parseInt(currentDate.getMonth()), parseInt(currentDate.getDate()));
     var selectedExpirationDate = new Date(parseInt(expirationDateValues[0]),parseInt(expirationDateValues[1]) - 1,parseInt(expirationDateValues[2]));
 
+    console.log(votesPerTimeslot)
+    console.log(votesPerParticipant)
+
 
     // validate input data for the form
     if (title == "") {
         alert("Please input a title before submitting your form")
         return false
-    }
-
-    if (location == "") {
+    } else if (location == "") {
         alert("Please input a location before submitting your form")
         return false
-    }
-
-    if (selectedExpirationDate < currentDate){
-        alert("Please select an expiration date that is greater than the current date.")
-        return false
-    }
-
-    if ( votesPerTimeslot != "") {
-
+    } else if (expirationDateValues != [""]) {
+        if (selectedExpirationDate < currentDate){
+            alert("Please select an expiration date that is greater than the current date.")
+            return false
+        }
+    } else if ( votesPerTimeslot != "") {
         if (isNaN(votesPerTimeslot) || parseInt(votesPerTimeslot) < 1) {
             alert("Please input an integer value greater than 0 for the maximum number of votes per timeslot")
             return false
         }
-    }
-
-    if (votesPerParticipant != "") {
-
+    } else if (votesPerParticipant != "") {
         if (isNaN(votesPerParticipant) || parseInt(votesPerParticipant) < 1) {
             alert("Please input an integer value greater than 0 for the maximum number of votes per poll participant.")
             return false
         }
     }
 
+    return false
+
 }
+;
