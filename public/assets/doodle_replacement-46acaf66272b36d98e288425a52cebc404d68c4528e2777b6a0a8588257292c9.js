@@ -4,6 +4,7 @@ var schedule = MindFusion.Scheduling;
 // create a new instance of the calendar from a div with id "calendar"
 //declared in the HTML page
 calendar = new schedule.Calendar(document.getElementById("calendar"));
+calendar.licenseLocation = ""
 
 calendar.useForms = false;
 
@@ -58,17 +59,17 @@ function handleSelectionEnd(sender, args)  {
 
 function submitPoll() {
 
-    var pollData = {}
-    var numAppointments = 0
+    var pollData = {};
+    var numAppointments = 0;
 
-   /* var selected_time_zone = $('.time_zone_info').data('time_zone')
+   var selected_time_zone = $('.time_zone_info').data('time-zone');
 
-    var time_zone_offsets = {
+   var time_zone_offsets = {
         "Pacific": "8",
         "Mountain": "7",
         "Central": "6",
         "Eastern": "5"
-    } */
+   }
 
     appointments = calendar.schedule.items.forEach(function(item, index){
 
@@ -76,12 +77,13 @@ function submitPoll() {
 
         console.log(item)
         console.log(item)
+        console.log(selected_time_zone)
 
-       /* if (selected_time_zone != "My Time Zone") {
+       if (selected_time_zone != "My Time Zone") {
             var current_time_zone_offest = (item.startTime.__getTimezoneOffset())/60;
             var selected_time_zone_offset = time_zone_offsets[selected_time_zone];
             time_adjustment = selected_time_zone_offset - current_time_zone_offest
-        } */
+        }
 
         // shift time depending on the time zone selected by the user
         startTimeString = (item.startTime.addHours(time_adjustment)).__toUTCString();

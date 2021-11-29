@@ -1,10 +1,8 @@
-
 var schedule = MindFusion.Scheduling;
 
 // create a new instance of the calendar from a div with id "calendar"
 //declared in the HTML page
 calendar = new schedule.Calendar(document.getElementById("calendar"));
-
 calendar.useForms = false;
 
 // set the view to Timetable, which displays the allotment of resources to distinct hours of a day

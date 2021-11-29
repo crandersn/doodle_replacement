@@ -8,7 +8,7 @@
   <%= button_tag "Save Poll", {class: "btn btn-primary col-md-2 col-md-offset-5", onclick: "submitPoll()"} %>
 </div>
 
-<% content_for :javascript_includes do %>
+<% content_for :calendar_javascript do %>
   <%= javascript_include_tag "MindFusion.Scheduling.js" %>
   <%= javascript_include_tag "doodle_replacement.js" %>
   <%= javascript_include_tag "TimeForm.js" %>
