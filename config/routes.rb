@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'admin/homepage', as: :admin_root
 
   # define poll controller routes
-  get 'poll/new' => 'poll#new', as: :admin_root
+  get 'poll/new' => 'poll#new'
   post 'poll/choose_time_slots' => 'poll#choose_time_slots'
   post 'poll/create' => 'poll#create'
 
