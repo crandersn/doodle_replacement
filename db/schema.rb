@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20211127221641) do
     t.string  "poll_name"
     t.string  "poll_description"
     t.string  "meeting_location"
+    t.string  "votes_per_timeslot"
+    t.string  "votes_per_person"
     t.string  "deadline"
     t.string  "status"
     t.integer "admin_id"
@@ -48,9 +50,10 @@ ActiveRecord::Schema.define(version: 20211127221641) do
 
   create_table "timeslots", force: :cascade do |t|
     t.boolean "available"
-    t.string  "date"
     t.string  "start_time"
-    t.integer "duration"
+    t.string  "end_time"
+    t.integer "num_votes"
+    t.string  "notes"
     t.integer "poll_id"
   end
 
