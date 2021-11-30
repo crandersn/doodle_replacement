@@ -62,10 +62,10 @@ function submitPoll() {
    var selected_time_zone = $('.time_zone_info').data('time-zone');
 
    var time_zone_offsets = {
-        "Pacific": "8",
-        "Mountain": "7",
-        "Central": "6",
-        "Eastern": "5"
+        "PST": "8",
+        "MST": "7",
+        "CST": "6",
+        "EST": "5"
    }
 
     appointments = calendar.schedule.items.forEach(function(item, index){

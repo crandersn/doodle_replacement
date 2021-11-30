@@ -6,6 +6,7 @@ class PollController < ApplicationController
 
   def choose_time_slots
 
+
     # get input params and make them available for the create method
     flash[:title] = params[:title]
     flash[:location] = params[:location]
@@ -14,6 +15,7 @@ class PollController < ApplicationController
     flash[:votes_per_person] = params[:votes_per_person]
     flash[:notes] = params[:notes]
 
+    @title = params[:title]
     @time_zone = params[:time_zone]
 
   end
