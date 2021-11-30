@@ -5,6 +5,8 @@ var schedule = MindFusion.Scheduling;
 calendar = new schedule.Calendar(document.getElementById("calendar"));
 calendar.useForms = false;
 
+calendar.setLicenseKey("UVVNUCU1Qk1aJTIwWiUwQ1ElMDdTJTFBUUNRJTIyUiUwRFIlMDdQJTA2UyUxMSUzQyUxMFAlMENSJTBEU0NTS1MlMERSJTBDJTA5JTBEJTEwTiUxMyUwMCUwRiUwQyUwMiUwRSUwRCUwRSUwRCUwNiUwNiUxMSUxMSUwMCUwQSUwMiUwRkMlMEYlMEElMDAlMDYlMEQlMTAlMDZK")
+
 // set the view to Timetable, which displays the allotment of resources to distinct hours of a day
 calendar.currentView = schedule.CalendarView.Timetable;
 //set the theme to gray as referenced
