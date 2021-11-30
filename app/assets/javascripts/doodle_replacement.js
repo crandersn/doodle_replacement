@@ -96,15 +96,11 @@ function submitPoll() {
         pollData[index] = appointment;
         numAppointments += 1;
 
-        // console.log((new Date(item.startTime.__toUTCString())).toString())
-        // console.log(item.startTime.__toString())
     });
 
     pollData["num_appointments"] = numAppointments
 
-    $.post("/poll/create", pollData, function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
-    });
+    $.post("/poll/create", pollData, function(data, status){});
 }
 
 // render the calendar control
