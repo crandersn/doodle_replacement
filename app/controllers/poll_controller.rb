@@ -25,7 +25,7 @@ class PollController < ApplicationController
     # check to see if params made it to the create method
     poll = Poll.create!(poll_identifier: "12345", poll_name: flash[:title], poll_description: flash[:notes],
                         meeting_location: flash[:location], votes_per_timeslot: flash[:votes_per_timeslot], votes_per_person: flash[:votes_per_person],
-                        deadline: flash[:expiration_date], status: "inactive", admin_id: current_admin.id)
+                        deadline: flash[:deadline], status: "inactive", admin_id: current_admin.id)
 
     num_appointments =  params["num_appointments"].to_i
     i = 0
