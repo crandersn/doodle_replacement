@@ -10,5 +10,20 @@
     <th scope="col">Timeslot</th>
     <th scope="col">Number of Votes</th>
   </tr>
+  <tbody>
+  <tr>
+    <td>123</td>
+    <td>12-10-2021</td>
+    <td>11:00am-11:30am</td>
+    <td>1</td>
+  </tbody>
+
+  <% @reservers.each do |reserver| %>
+    <td><%= reserver.name %></td>
+    <td></td>
+    <td>/td>
+    <td></td>
+    </tr>
+  <% end %>
   </thead>
 </table>
