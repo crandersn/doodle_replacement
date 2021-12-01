@@ -58,7 +58,11 @@ class PollController < ApplicationController
 
   end
 
+
+  # TODO: still need to implement system to pass name of person who voted
   def cast_vote
+
+
 
   end
 
