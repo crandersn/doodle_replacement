@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'poll/choose_time_slots' => 'poll#choose_time_slots'
   post 'poll/create' => 'poll#create'
   get 'poll/vote' => "poll#vote"
+  post 'poll/cast_vote' => "poll#cast_vote"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -58,4 +58,8 @@ class PollController < ApplicationController
 
   end
 
+  def cast_vote
+
+  end
+
 end

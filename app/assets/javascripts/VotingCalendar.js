@@ -17,12 +17,15 @@ calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(30);
 //sets how many days will be changed on a scroll click
 calendar.timetableSettings.scrollStep = 7;
 calendar.timetableSettings.showDayHeader = true;
-calendar.timetableSettings.cellSize = 20;
+calendar.timetableSettings.cellSize = 28;
 
 // set the start time to 05:00 AM
 calendar.timetableSettings.startTime  = 300;
 // set the end time to 22:00 PM
 calendar.timetableSettings.endTime = 1380;
+
+// Don't Use International Time
+calendar.timetableSettings.twelveHourFormat = true;
 
 
 // TODO: Consider altering this to showing the week of the first poll timeslot
@@ -34,13 +37,20 @@ for (var i = 1; i < 8; i++) {
     calendar.timetableSettings.dates.add(currDay.addDays(-1 * currDay.dayOfWeek + i));
 }
 
-// place timeslots on the calendar
+// initialize vote data variable
+var timeslotMappings = {}
 
+// place timeslots on the calendar
 var poll = $('.calendar_data').data('poll-data');
 var timeslots = $('.calendar_data').data('timeslot-data');
-
 var i = 0
 var length = timeslots.length
+
+// initialize variables to keep track of voting
+var maxNumVotes = parseInt(poll["votes_per_person"])
+var numVotesCast = 0
+
+var votes = new Set();
 
 while (i < length) {
 
@@ -51,9 +61,17 @@ while (i < length) {
 
         item.startTime = new schedule.DateTime(new Date(timeslot["start_time"]));
         item.endTime = new schedule.DateTime(new Date(timeslot["end_time"]));
-        item.subject = timeslot["notes"];
+
+        if (timeslot["available"] == true){
+            item.subject = "Available";
+        } else {
+            item.subject = "Reserved";
+        }
+        item.details = "Notes: " + timeslot["notes"];
         item.locked = true;
         calendar.schedule.items.add(item);
+
+        timeslotMappings[item.id] = timeslot["id"]
     }
 
     i += 1;
@@ -70,50 +88,17 @@ function handleItemDoubleClick(sender, args) {
 }
 
 
-// TODO: This will obviously have to be modified
 function submitVotes() {
 
-    var pollData = {};
-    var numAppointments = 0;
+    var votingData = {}
 
-    var selected_time_zone = $('.time_zone_info').data('time-zone');
+    // TODO: Don't Hardcode this
+    votingData["person"] = "bob"
 
-    var time_zone_offsets = {
-        "PST": "8",
-        "MST": "7",
-        "CST": "6",
-        "EST": "5"
-    }
+    votingData["poll_identifier"] = poll["poll_identifier"]
+    votingData["votes"] = Array.from(votes)
 
-    appointments = calendar.schedule.items.forEach(function(item, index){
-
-        var time_adjustment = 0;
-
-        if (selected_time_zone != "My Time Zone") {
-            var current_time_zone_offest = (item.startTime.__getTimezoneOffset())/60;
-            var selected_time_zone_offset = time_zone_offsets[selected_time_zone];
-            time_adjustment = selected_time_zone_offset - current_time_zone_offest
-        }
-
-        // shift time depending on the time zone selected by the user
-        startTimeString = (item.startTime.addHours(time_adjustment)).__toUTCString();
-        endTimeString = (item.endTime.addHours(time_adjustment)).__toUTCString();
-
-        subject = item.subject;
-
-        var appointment = {};
-        appointment["start_time"] = startTimeString;
-        appointment["end_time"] = endTimeString;
-        appointment["subject"] = subject
-
-        pollData[index] = appointment;
-        numAppointments += 1;
-
-    });
-
-    pollData["num_appointments"] = numAppointments
-
-    $.post("/poll/create", pollData, function(data, status){});
+    $.post("/poll/cast_vote", votingData, function(data, status){});
 }
 
 // render the calendar control
