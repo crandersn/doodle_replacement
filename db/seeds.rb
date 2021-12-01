@@ -6,14 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
 poll1 = {
   :poll_name => "Lab 3 Checkoff",
   :poll_identifier => "Kg7jH8L78",
   :poll_description => "Signup for Lab 3 Checkoff. Website should be functional.",
   :meeting_location => "1212 SC",
+  :votes_per_timeslot => "2",
+  :votes_per_person => "2",
   :status => "active",
-  :deadline => "11:59:59,12-10-2021",
+  :deadline => "2021-12-30",
   :admin_id => 1
 }
 Poll.create!(poll1)
@@ -35,30 +36,23 @@ Invitee.create!(invitee2)
 
 timeslot1 = {
   :available => true,
-  :date => "12-9-2021",
-  :start_time => "8:15",
-  :duration => "15",
+  :start_time => "Tue, 30 Nov 2021 12:00:00 GMT",
+  :end_time => "Tue, 30 Nov 2021 13:00:00 GMT",
+  :num_votes => 0,
+  :notes => "With Nick",
   :poll_id => 1
 }
 Timeslot.create!(timeslot1)
 
 timeslot2 = {
-  :available => false,
-  :date => "12-9-2021",
-  :start_time => "8:30",
-  :duration => "15",
+  :available => true,
+  :start_time => "Tue, 30 Nov 2021 11:00:00 GMT",
+  :end_time => "Tue, 30 Nov 2021 11:30:00 GMT",
+  :num_votes => 1,
+  :notes => "With Tessa",
   :poll_id => 1
 }
 Timeslot.create!(timeslot2)
-
-timeslot3 = {
-  :available => true,
-  :date => "12-9-2021",
-  :start_time => "8:45",
-  :duration => "15",
-  :poll_id => 1
-}
-Timeslot.create!(timeslot3)
 
 reserver1 = {
   :name => "John Doe",

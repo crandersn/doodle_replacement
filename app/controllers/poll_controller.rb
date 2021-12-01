@@ -6,6 +6,7 @@ class PollController < ApplicationController
 
   def choose_time_slots
 
+
     # get input params and make them available for the create method
     flash[:title] = params[:title]
     flash[:location] = params[:location]
@@ -14,6 +15,7 @@ class PollController < ApplicationController
     flash[:votes_per_person] = params[:votes_per_person]
     flash[:notes] = params[:notes]
 
+    @title = params[:title]
     @time_zone = params[:time_zone]
 
   end
@@ -23,7 +25,7 @@ class PollController < ApplicationController
     # check to see if params made it to the create method
     poll = Poll.create!(poll_identifier: "12345", poll_name: flash[:title], poll_description: flash[:notes],
                         meeting_location: flash[:location], votes_per_timeslot: flash[:votes_per_timeslot], votes_per_person: flash[:votes_per_person],
-                        deadline: flash[:expiration_date], status: "inactive", admin_id: current_admin.id)
+                        deadline: flash[:deadline], status: "inactive", admin_id: current_admin.id)
 
     num_appointments =  params["num_appointments"].to_i
     i = 0
@@ -35,8 +37,7 @@ class PollController < ApplicationController
       appointment_notes = params["#{i}"]["subject"]
 
       # instantiate new timeslot for this poll
-      timeslot = Timeslot.create!(available: true, start_time: startTime, end_time: endTime, num_votes: 0, notes: appointment_notes, poll_id: poll.id)
-
+      Timeslot.create!(available: true, start_time: startTime, end_time: endTime, num_votes: 0, notes: appointment_notes, poll_id: poll.id)
 
       i = i + 1
     end
@@ -44,6 +45,16 @@ class PollController < ApplicationController
     flash[:alert] = "poll successfully created..."
 
     redirect_to admin_root_path
+
+  end
+
+  def vote
+
+    poll_identifier = params[:poll_identifier]
+
+    @poll = Poll.where("poll_identifier = '#{poll_identifier}'").first
+    @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
+    @title = @poll.poll_name
 
   end
 

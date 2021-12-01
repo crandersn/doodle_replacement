@@ -7,7 +7,7 @@ var TimeForm = function (calendar, item, type) {
 
 	this._id = "TimeForm";
 	this._type = type;
-	this.headerText = "Appointment";
+	this.headerText = "Time Slot";
 
 }
 
