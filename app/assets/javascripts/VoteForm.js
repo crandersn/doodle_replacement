@@ -72,7 +72,11 @@ VoteForm.prototype.drawButtons = function () {
 // TODO: You may want to add alert messages to both of these functions
 VoteForm.prototype.onVoteButtonClick = function (e) {
 
-    if (this.item.subject != "Reserved" && numVotesCast < maxNumVotes && this.item.subject != "Reserved By Me") {
+    if (numVotesCast >= maxNumVotes){
+        alert("You max only vote on a maximum of " + maxNumVotes + " timeslots.")
+    } else if (this.item.subject == "Reserved By Me"){
+        alert("You have already voted on this timeslot.")
+    } else {
         this.item.subject = "Reserved By Me"
 
         var db_item_id = timeslotMappings[this.item.id]

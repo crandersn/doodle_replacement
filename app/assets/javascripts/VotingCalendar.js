@@ -47,6 +47,7 @@ var i = 0
 var length = timeslots.length
 
 // initialize variables to keep track of voting
+var votesPerPerson = parseInt(poll["votes_per_timeslot"])
 var maxNumVotes = parseInt(poll["votes_per_person"])
 var numVotesCast = 0
 
@@ -57,22 +58,19 @@ while (i < length) {
     var item = new schedule.Item();
     var timeslot = timeslots[i];
 
+    item.startTime = new schedule.DateTime(new Date(timeslot["start_time"]));
+    item.endTime = new schedule.DateTime(new Date(timeslot["end_time"]));
+
     if (timeslot["available"] == true){
-
-        item.startTime = new schedule.DateTime(new Date(timeslot["start_time"]));
-        item.endTime = new schedule.DateTime(new Date(timeslot["end_time"]));
-
-        if (timeslot["available"] == true){
-            item.subject = "Available";
-        } else {
-            item.subject = "Reserved";
-        }
-        item.details = "Notes: " + timeslot["notes"];
-        item.locked = true;
-        calendar.schedule.items.add(item);
-
-        timeslotMappings[item.id] = timeslot["id"]
+        item.subject = "Available";
+    } else {
+        item.subject = "Reserved";
     }
+    item.details = "Notes: " + timeslot["notes"];
+    item.locked = true;
+    calendar.schedule.items.add(item);
+
+    timeslotMappings[item.id] = timeslot["id"]
 
     i += 1;
 }
@@ -82,9 +80,13 @@ calendar.itemDoubleClick.addEventListener(handleItemDoubleClick);
 
 
 function handleItemDoubleClick(sender, args) {
-    // create and show the custom form
-    var form = new VoteForm(sender, args.item, "edit");
-    form.showForm();
+
+    // dont show form for reserved timeslots
+    if (args.item.subject != "Reserved"){
+        // create and show the custom form
+        var form = new VoteForm(sender, args.item, "edit");
+        form.showForm();
+    }
 }
 
 
@@ -92,10 +94,17 @@ function submitVotes() {
 
     var votingData = {}
 
-    // TODO: Don't Hardcode this
-    votingData["person"] = "bob"
+    var username = $('#username').val()
 
+    if (username == ""){
+        alert("Please enter your name before hitting submit...")
+        return
+    }
+
+    votingData["person"] = username
     votingData["poll_identifier"] = poll["poll_identifier"]
+    votingData["votes_per_person"] = maxNumVotes
+    votingData["votes_per_timeslot"] = votesPerPerson
     votingData["votes"] = Array.from(votes)
 
     $.post("/poll/cast_vote", votingData, function(data, status){});

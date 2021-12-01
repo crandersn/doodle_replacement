@@ -58,11 +58,28 @@ class PollController < ApplicationController
 
   end
 
-
-  # TODO: still need to implement system to pass name of person who voted
   def cast_vote
 
+    username = params[:person]
+    timeslot_ids = params[:votes]
+    votes_per_timeslot = params[:votes_per_timeslot]
 
+    timeslots = Timeslot.find(timeslot_ids)
+
+    timeslots.each do |timeslot|
+
+      if (timeslot.num_votes + 1) >= votes_per_timeslot.to_i
+        timeslot.update(num_votes: timeslot.num_votes + 1, available: false)
+      else
+        timeslot.update(num_votes: timeslot.num_votes + 1)
+      end
+
+      Reserver.create!(name: username, timeslot_id: timeslot.id)
+
+    end
+
+    # TODO: User SHOULD NOT be redirected here in final product
+    redirect_to admin_root_path
 
   end
 
