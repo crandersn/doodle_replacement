@@ -9,12 +9,15 @@ Rails.application.routes.draw do
   end
 
   # admin homepage
-  get 'admin/homepage', as: :admin_root
+  #get 'admin/homepage', as: :admin_root
 
   # define poll controller routes
   get 'poll/new' => 'poll#new', as: :admin_root
   post 'poll/choose_time_slots' => 'poll#choose_time_slots'
   post 'poll/create' => 'poll#create'
+
+  # poll results page
+  post 'results/get_results' => 'results#get_results'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

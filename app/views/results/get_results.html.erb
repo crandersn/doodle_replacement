@@ -1,13 +1,14 @@
-<p>POLL RESULTS PAGE</p>
+<h1 style="text-align: center">Poll Results for Poll: <%= @title %></h1>
+
+<p>Here are the reservers: <%=@reservers %></p>
 
 <table style="width:1500px;margin:0 auto;font-size:20px" class="table table-striped center table-sm">
   <thead>
   <tr>
-    <th scope="col">Name</th>
-    <th scope="col">Status</th>
-    <th scope="col">Deadline</th>
-    <th scope="col"></th>
-    <th scope="col" >Delete</th>
+    <th scope="col">User ID</th>
+    <th scope="col">Date</th>
+    <th scope="col">Timeslot</th>
+    <th scope="col">Number of Votes</th>
   </tr>
   </thead>
 </table>
