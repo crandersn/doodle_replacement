@@ -1,3 +1,12 @@
+<h1 style="text-align: center">Poll Title: <%= @title %></h1>
+<h3 style="margin-bottom: 20px; text-align: center">
+  <% if @time_zone == "My Time Zone" %>
+    Poll Time Zone: <%= Time.now.zone %>
+  <% else %>
+    Poll Time Zone: <%= @time_zone %>
+  <% end %>
+</h3>
+
 <div style="width: 100%; height: 80%;">
 
   <%= content_tag :div, id: 'calendar', style: "height: 100%; width: 100%", class: "time_zone_info", data: {time_zone: @time_zone} do %>

@@ -1,11 +1,8 @@
-
 var schedule = MindFusion.Scheduling;
 
 // create a new instance of the calendar from a div with id "calendar"
 //declared in the HTML page
 calendar = new schedule.Calendar(document.getElementById("calendar"));
-calendar.licenseLocation = "config.txt"
-
 calendar.useForms = false;
 
 // set the view to Timetable, which displays the allotment of resources to distinct hours of a day
@@ -65,10 +62,10 @@ function submitPoll() {
    var selected_time_zone = $('.time_zone_info').data('time-zone');
 
    var time_zone_offsets = {
-        "Pacific": "8",
-        "Mountain": "7",
-        "Central": "6",
-        "Eastern": "5"
+        "PST": "8",
+        "MST": "7",
+        "CST": "6",
+        "EST": "5"
    }
 
     appointments = calendar.schedule.items.forEach(function(item, index){
@@ -99,15 +96,11 @@ function submitPoll() {
         pollData[index] = appointment;
         numAppointments += 1;
 
-        // console.log((new Date(item.startTime.__toUTCString())).toString())
-        // console.log(item.startTime.__toString())
     });
 
     pollData["num_appointments"] = numAppointments
 
-    $.post("/poll/create", pollData, function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
-    });
+    $.post("/poll/create", pollData, function(data, status){});
 }
 
 // render the calendar control

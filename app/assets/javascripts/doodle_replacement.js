@@ -5,6 +5,8 @@ var schedule = MindFusion.Scheduling;
 calendar = new schedule.Calendar(document.getElementById("calendar"));
 calendar.useForms = false;
 
+calendar.setLicenseKey("UVVNUCU1Qk1aJTIwWiUwQ1ElMDdTJTFBUUNRJTIyUiUwRFIlMDdQJTA2UyUxMSUzQyUxMFAlMENSJTBEU0NTS1MlMERSJTBDJTA5JTBEJTEwTiUxMyUwMCUwRiUwQyUwMiUwRSUwRCUwRSUwRCUwNiUwNiUxMSUxMSUwMCUwQSUwMiUwRkMlMEYlMEElMDAlMDYlMEQlMTAlMDZK")
+
 // set the view to Timetable, which displays the allotment of resources to distinct hours of a day
 calendar.currentView = schedule.CalendarView.Timetable;
 //set the theme to gray as referenced
@@ -62,31 +64,35 @@ function submitPoll() {
    var selected_time_zone = $('.time_zone_info').data('time-zone');
 
    var time_zone_offsets = {
-        "Pacific": "8",
-        "Mountain": "7",
-        "Central": "6",
-        "Eastern": "5"
+        "PST": "8",
+        "MST": "7",
+        "CST": "6",
+        "EST": "5"
    }
 
     appointments = calendar.schedule.items.forEach(function(item, index){
 
+        console.log("before if: " + item.startTime);
+        console.log("before if: " + item.endTime);
+
         var time_adjustment = 0;
 
-        console.log(item)
-        console.log(item)
-        console.log(selected_time_zone)
-
-       if (selected_time_zone != "My Time Zone") {
-            var current_time_zone_offest = (item.startTime.__getTimezoneOffset())/60;
+        if (selected_time_zone != "My Time Zone") {
+            var current_time_zone_offest = ((new Date()).getTimezoneOffset()) / 60;
             var selected_time_zone_offset = time_zone_offsets[selected_time_zone];
-            time_adjustment = selected_time_zone_offset - current_time_zone_offest
+            time_adjustment = selected_time_zone_offset - current_time_zone_offest;
         }
 
         // shift time depending on the time zone selected by the user
-        startTimeString = (item.startTime.addHours(time_adjustment)).__toUTCString();
-        endTimeString = (item.endTime.addHours(time_adjustment)).__toUTCString();
+        var startDate = new Date(item.startTime.__toUTCString())
+        startDate.setHours(startDate.getHours() + time_adjustment)
+        var startTimeString = startDate.toUTCString()
 
-        subject = item.subject;
+        var endDate = new Date(item.endTime.__toUTCString())
+        endDate.setHours(endDate.getHours() + time_adjustment)
+        var endTimeString = endDate.toUTCString()
+
+        var subject = item.clone().subject;
 
         var appointment = {};
         appointment["start_time"] = startTimeString;
