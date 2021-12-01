@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'poll/new' => 'poll#new', as: :admin_root
   post 'poll/choose_time_slots' => 'poll#choose_time_slots'
   post 'poll/create' => 'poll#create'
+  get 'poll/vote' => "poll#vote"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

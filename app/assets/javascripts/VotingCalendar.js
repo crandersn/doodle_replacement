@@ -2,7 +2,7 @@ var schedule = MindFusion.Scheduling;
 
 // create a new instance of the calendar from a div with id "calendar"
 //declared in the HTML page
-calendar = new schedule.Calendar(document.getElementById("calendar"));
+calendar = new schedule.Calendar(document.getElementById("voting-calendar"));
 calendar.useForms = false;
 
 calendar.setLicenseKey("UVVNUCU1Qk1aJTIwWiUwQ1ElMDdTJTFBUUNRJTIyUiUwRFIlMDdQJTA2UyUxMSUzQyUxMFAlMENSJTBEU0NTS1MlMERSJTBDJTA5JTBEJTEwTiUxMyUwMCUwRiUwQyUwMiUwRSUwRCUwRSUwRCUwNiUwNiUxMSUxMSUwMCUwQSUwMiUwRkMlMEYlMEElMDAlMDYlMEQlMTAlMDZK")
@@ -24,14 +24,42 @@ calendar.timetableSettings.startTime  = 300;
 // set the end time to 22:00 PM
 calendar.timetableSettings.endTime = 1380;
 
+
+// TODO: Consider altering this to showing the week of the first poll timeslot
 //get the current date
 var currDay = schedule.DateTime.today();
 calendar.timetableSettings.dates.clear();
 
 for (var i = 1; i < 8; i++) {
-	calendar.timetableSettings.dates.add(currDay.addDays(-1 * currDay.dayOfWeek + i));
+    calendar.timetableSettings.dates.add(currDay.addDays(-1 * currDay.dayOfWeek + i));
 }
 
+// place timeslots on the calendar
+
+var poll = $('.calendar_data').data('poll-data');
+var timeslots = $('.calendar_data').data('timeslot-data');
+
+console.log(timeslots)
+
+var i = 0
+var length = timeslots.length
+console.log(length)
+
+while (i < length) {
+
+    var item = new schedule.Item();
+    var timeslot = timeslots[i];
+
+    if (timeslot["available"] == true){
+
+        item.startTime = new schedule.DateTime(new Date(timeslot["start_time"]));
+        item.endTime = new schedule.DateTime(new Date(timeslot["end_time"]));
+        item.subject = timeslot["notes"];
+        calendar.schedule.items.add(item)
+    }
+
+    i += 1;
+}
 
 // handle the itemDoubleClick event to show the custom form for item editing
 calendar.itemDoubleClick.addEventListener(handleItemDoubleClick);
@@ -40,59 +68,53 @@ calendar.itemDoubleClick.addEventListener(handleItemDoubleClick);
 calendar.selectionEnd.addEventListener(handleSelectionEnd);
 
 function handleItemDoubleClick(sender, args) {
-	// create and show the custom form
-	var form = new TimeForm(sender, args.item, "edit");
-	form.showForm();
+    // create and show the custom form
+    var form = new TimeForm(sender, args.item, "edit");
+    form.showForm();
 }
 
 function handleSelectionEnd(sender, args)  {
-	// create a new item with the start and end time of the selection
-	var item = new p.Item();
-	item.startTime = args.startTime;
-	item.endTime = args.endTime;
+    // create a new item with the start and end time of the selection
+    var item = new p.Item();
+    item.startTime = args.startTime;
+    item.endTime = args.endTime;
 
-	// create and show the custom form
-	var form = new TimeForm(sender, item, "new");
-	form.showForm();
+    // create and show the custom form
+    var form = new TimeForm(sender, item, "new");
+    form.showForm();
 }
 
-function submitPoll() {
+
+// TODO: This will obviously have to be modified
+function submitVotes() {
 
     var pollData = {};
     var numAppointments = 0;
 
-   var selected_time_zone = $('.time_zone_info').data('time-zone');
+    var selected_time_zone = $('.time_zone_info').data('time-zone');
 
-   var time_zone_offsets = {
+    var time_zone_offsets = {
         "PST": "8",
         "MST": "7",
         "CST": "6",
         "EST": "5"
-   }
+    }
 
     appointments = calendar.schedule.items.forEach(function(item, index){
-
-        console.log("before if: " + item.startTime);
-        console.log("before if: " + item.endTime);
 
         var time_adjustment = 0;
 
         if (selected_time_zone != "My Time Zone") {
-            var current_time_zone_offest = ((new Date()).getTimezoneOffset()) / 60;
+            var current_time_zone_offest = (item.startTime.__getTimezoneOffset())/60;
             var selected_time_zone_offset = time_zone_offsets[selected_time_zone];
-            time_adjustment = selected_time_zone_offset - current_time_zone_offest;
+            time_adjustment = selected_time_zone_offset - current_time_zone_offest
         }
 
         // shift time depending on the time zone selected by the user
-        var startDate = new Date(item.startTime.__toUTCString())
-        startDate.setHours(startDate.getHours() + time_adjustment)
-        var startTimeString = startDate.toUTCString()
+        startTimeString = (item.startTime.addHours(time_adjustment)).__toUTCString();
+        endTimeString = (item.endTime.addHours(time_adjustment)).__toUTCString();
 
-        var endDate = new Date(item.endTime.__toUTCString())
-        endDate.setHours(endDate.getHours() + time_adjustment)
-        var endTimeString = endDate.toUTCString()
-
-        var subject = item.clone().subject;
+        subject = item.subject;
 
         var appointment = {};
         appointment["start_time"] = startTimeString;

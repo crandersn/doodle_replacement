@@ -37,8 +37,7 @@ class PollController < ApplicationController
       appointment_notes = params["#{i}"]["subject"]
 
       # instantiate new timeslot for this poll
-      timeslot = Timeslot.create!(available: true, start_time: startTime, end_time: endTime, num_votes: 0, notes: appointment_notes, poll_id: poll.id)
-
+      Timeslot.create!(available: true, start_time: startTime, end_time: endTime, num_votes: 0, notes: appointment_notes, poll_id: poll.id)
 
       i = i + 1
     end
@@ -46,6 +45,16 @@ class PollController < ApplicationController
     flash[:alert] = "poll successfully created..."
 
     redirect_to admin_root_path
+
+  end
+
+  def vote
+
+    poll_identifier = params[:poll_identifier]
+
+    @poll = Poll.where("poll_identifier = '#{poll_identifier}'").first
+    @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
+    @title = @poll.poll_name
 
   end
 

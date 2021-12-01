@@ -1,0 +1,17 @@
+<h1 style="text-align: center">Poll Title: <%= @title %></h1>
+
+<div style="width: 100%; height: 80%;">
+
+  <%= content_tag :div, id: 'voting-calendar', style: "height: 100%; width: 100%", class: "calendar_data", data: {poll_data: @poll, timeslot_data: @timeslots} do %>
+  <% end %>
+</div>
+
+<div style="margin-top: 15px">
+  <%= button_tag "Save", {class: "btn btn-primary col-md-2 col-md-offset-5", onclick: "submitVotes()"} %>
+</div>
+
+<% content_for :voting_calendar_javascript do %>
+  <%= javascript_include_tag "MindFusion.Scheduling.js" %>
+  <%= javascript_include_tag "VotingCalendar.js" %>
+  <%= javascript_include_tag "TimeForm.js" %>
+<% end %>
