@@ -62,11 +62,37 @@
         <td class="light"><button type="button" class="btn btn-secondary text-center">X</button></td>
       </tr>
 
-    </tbody>
+      <% @polls.each do |poll| %>
+        <% if poll.status.eql? 'Not Started' %>
+          <tr class="warning">
+
+        <% elsif poll.status.eql? 'Active' %>
+          <tr class="success">
+
+        <% elsif poll.status.eql? 'Finished' %>
+          <tr class="active">
+
+        <% end %>
+
+
+        <td><%= poll.poll_name %></td>
+          <td><%=poll.status%></td>
+          <td>11:59 PM, 10-6-2021</td>
+          <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>
+          <td class="light"><button type="button" class="btn btn-secondary text-center">X</button></td>
+        </tr>
+      <% end %>
+
+        </tbody>
 
   </table>
 
   <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>
+<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%#= @test %> ?</button></div>-->
+
+  <%# @polls.each do |poll| %>
+<!--    <p> <%#= poll.poll_name %></p>-->
+  <%# end %>
 
 </body>
 
