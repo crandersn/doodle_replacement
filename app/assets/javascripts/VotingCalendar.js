@@ -39,11 +39,8 @@ for (var i = 1; i < 8; i++) {
 var poll = $('.calendar_data').data('poll-data');
 var timeslots = $('.calendar_data').data('timeslot-data');
 
-console.log(timeslots)
-
 var i = 0
 var length = timeslots.length
-console.log(length)
 
 while (i < length) {
 
@@ -55,7 +52,8 @@ while (i < length) {
         item.startTime = new schedule.DateTime(new Date(timeslot["start_time"]));
         item.endTime = new schedule.DateTime(new Date(timeslot["end_time"]));
         item.subject = timeslot["notes"];
-        calendar.schedule.items.add(item)
+        item.locked = true;
+        calendar.schedule.items.add(item);
     }
 
     i += 1;
@@ -64,23 +62,10 @@ while (i < length) {
 // handle the itemDoubleClick event to show the custom form for item editing
 calendar.itemDoubleClick.addEventListener(handleItemDoubleClick);
 
-// handle the selectionEnd event to show the custom form for item creation
-calendar.selectionEnd.addEventListener(handleSelectionEnd);
 
 function handleItemDoubleClick(sender, args) {
     // create and show the custom form
-    var form = new TimeForm(sender, args.item, "edit");
-    form.showForm();
-}
-
-function handleSelectionEnd(sender, args)  {
-    // create a new item with the start and end time of the selection
-    var item = new p.Item();
-    item.startTime = args.startTime;
-    item.endTime = args.endTime;
-
-    // create and show the custom form
-    var form = new TimeForm(sender, item, "new");
+    var form = new VoteForm(sender, args.item, "edit");
     form.showForm();
 }
 
