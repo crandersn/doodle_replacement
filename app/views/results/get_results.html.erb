@@ -8,7 +8,7 @@
     <th scope="col">User ID</th>
     <th scope="col">Date</th>
     <th scope="col">Timeslot</th>
-    <th scope="col">Number of Votes</th>
+    <th scope="col">Available</th>
   </tr>
   <tbody>
   <tr>
@@ -17,13 +17,27 @@
     <td>11:00am-11:30am</td>
     <td>1</td>
   </tbody>
-
-  <% @reservers.each do |reserver| %>
-    <td><%= reserver.name %></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
+  <% @timeslots.each do |timeslot| %>
+    <% if timeslot.available == false %>
+      <% @reservers.each do |reserver| %>
+        <td><%= reserver.name %></td>
+        <td><%= timeslot.date %></td>
+        <td><%= reserver.timeslot%></td>
+        <td>False</td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% @timeslots.each do |timeslot| %>
+    <% if timeslot.available == true %>
+      <% @reservers.each do |reserver| %>
+        <td><%= reserver.name %></td>
+        <td><%= timeslot.date %></td>
+        <td><%= reserver.timeslot%></td>
+        <td>True</td>
+        </tr>
+      <% end %>
+    <% end %>
   <% end %>
   </thead>
 </table>

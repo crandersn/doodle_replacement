@@ -8,7 +8,7 @@ class ResultsController < ApplicationController
     @poll = Poll.where("poll_identifier = '#{poll_identifier}'").first
     @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
     @title = @poll.poll_name
-
     @reservers = Reserver.where("poll_id = '#{@poll.id}'")
+
   end
 end
