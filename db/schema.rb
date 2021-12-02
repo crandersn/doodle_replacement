@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20211127221641) do
 
   create_table "polls", force: :cascade do |t|
     t.string  "poll_name"
+    t.string  "time_zone"
     t.string  "poll_description"
     t.string  "meeting_location"
     t.string  "votes_per_timeslot"

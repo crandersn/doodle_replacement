@@ -229,6 +229,11 @@ TimeForm.prototype.onSaveButtonClick = function (e) {
     var startIndex = +this.getControlValue("start_time");
     var endIndex = +this.getControlValue("end_time");
 
+    // eliminate possibility of user entering a negative amount of time
+    if (endIndex <= startIndex) {
+        endIndex = startIndex + 1;
+    }
+
     // reduce num appointments if necessary
     var numAppointments = +this.getControlValue("num_appointments");
     if (numAppointments > (endIndex - startIndex))
