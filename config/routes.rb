@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'admin/homepage', as: :admin_root
   get 'admin/start' => 'admin#start'
   get 'admin/end' => 'admin#end'
+  get 'admin/delete' => 'admin#delete'
 
 
   # define poll controller routes

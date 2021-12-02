@@ -23,9 +23,20 @@ class AdminController < ApplicationController
 
     id = params["end_poll"]
 
-    poll_started = Poll.find(id)
-    poll_started.status = 'Finished'
-    poll_started.save!
+    poll_ended = Poll.find(id)
+    poll_ended.status = 'Finished'
+    poll_ended.save!
+
+    redirect_to admin_root_path
+
+  end
+
+  def delete
+
+    id = params["delete_poll"]
+
+    poll_deleted = Poll.find(id)
+    poll_deleted.destroy
 
     redirect_to admin_root_path
 
