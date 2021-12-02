@@ -2,6 +2,7 @@ class AdminController < ApplicationController
 
   def homepage
     @test = params[:test]
+    @current_user = current_admin.email
     @not_started_polls = Poll.where("status = 'Not Started'")
     @active_polls = Poll.where("status = 'Active'")
     @finished_polls = Poll.where("status = 'Finished'")
