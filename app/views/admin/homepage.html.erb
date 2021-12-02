@@ -30,58 +30,67 @@
     </thead>
 
     <tbody>
-      <tr class="warning">
-        <td>TA Office Hours - Week 14</td>
-        <td>Not Started <button type="button" class="btn btn-success btn-xs">START</button></td>
-        <td>-</td>
-        <td><button type="button" class="btn btn-secondary">EDIT</button></td>
-        <td><button type="button" class="btn btn-secondary text-center">X</button></td>
-      </tr>
+<!--      <tr class="warning">-->
+<!--        <td>TA Office Hours - Week 14</td>-->
+<!--        <td>Not Started <button type="button" class="btn btn-success btn-xs">START</button></td>-->
+<!--        <td>-</td>-->
+<!--        <td><button type="button" class="btn btn-secondary">EDIT</button></td>-->
+<!--        <td><button type="button" class="btn btn-secondary text-center">X</button></td>-->
+<!--      </tr>-->
 
-      <tr class="success">
-        <td>Lab 3 Checkoff</td>
-        <td>Active <button type="button" class="btn btn-warning btn-xs">END</button></td>
-        <td>11:59 PM, 12-10-2021</td>
-        <td><button type="button" class="btn btn-info">VIEW CURRENT RESULTS</button>  </td>
-        <td><button type="button" class="btn btn-secondary text-center">X</button></td>
-      </tr>
+<!--      <tr class="success">-->
+<!--        <td>Lab 3 Checkoff</td>-->
+<!--        <td>Active <button type="button" class="btn btn-warning btn-xs">END</button></td>-->
+<!--        <td>11:59 PM, 12-10-2021</td>-->
+<!--        <td><button type="button" class="btn btn-info">VIEW CURRENT RESULTS</button>  </td>-->
+<!--        <td><button type="button" class="btn btn-secondary text-center">X</button></td>-->
+<!--      </tr>-->
 
-      <tr class="active">
-        <td>Lab 1 Checkoff</td>
-        <td>Finished</td>
-        <td>11:59 PM, 11-2-2021</td>
-        <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>
-        <td><button type="button" class="btn btn-secondary text-center">X</button></td>
-      </tr>
+<!--      <tr class="active">-->
+<!--        <td>Lab 1 Checkoff</td>-->
+<!--        <td>Finished</td>-->
+<!--        <td>11:59 PM, 11-2-2021</td>-->
+<!--        <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>-->
+<!--        <td><button type="button" class="btn btn-secondary text-center">X</button></td>-->
+<!--      </tr>-->
 
-      <tr class="active">
-        <td>Lab 1 Checkoff</td>
-        <td>Finished</td>
-        <td>11:59 PM, 10-6-2021</td>
-        <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>
-        <td class="light"><button type="button" class="btn btn-secondary text-center">X</button></td>
-      </tr>
+<!--      <tr class="active">-->
+<!--        <td>Lab 1 Checkoff</td>-->
+<!--        <td>Finished</td>-->
+<!--        <td>11:59 PM, 10-6-2021</td>-->
+<!--        <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>-->
+<!--        <td class="light"><button type="button" class="btn btn-secondary text-center">X</button></td>-->
+<!--      </tr>-->
 
-      <% @polls.each do |poll| %>
-        <% if poll.status.eql? 'Not Started' %>
-          <tr class="warning">
-
-        <% elsif poll.status.eql? 'Active' %>
-          <tr class="success">
-
-        <% elsif poll.status.eql? 'Finished' %>
-          <tr class="active">
-
-        <% end %>
-
-
-        <td><%= poll.poll_name %></td>
-          <td><%=poll.status%></td>
-          <td>11:59 PM, 10-6-2021</td>
-          <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>
-          <td class="light"><button type="button" class="btn btn-secondary text-center">X</button></td>
+      <% @not_started_polls.each do |poll| %>
+        <tr class="warning">
+          <td><%= poll.poll_name %></td>
+          <td><%=poll.status%> <button type="button" class="btn btn-success btn-xs">START</button></td>
+          <td><%=poll.deadline%></td>
+          <td align="right"><button type="button" class="btn btn-secondary">EDIT</button></td>
+          <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>
         </tr>
       <% end %>
+
+      <% @active_polls.each do |poll| %>
+      <tr class="success">
+        <td><%= poll.poll_name %></td>
+        <td><%=poll.status%> <button type="button" class="btn btn-warning btn-xs">END</button> </td>
+        <td><%=poll.deadline%></td>
+        <td align="right"><button type="button" class="btn btn-primary">VIEW LIVE RESULTS</button></td>
+        <td class="light"><button type="button" class="btn btn-danger text-center" data-toggle="tooltip" data-placement="right" title="Delete Poll">X</button></td>
+      </tr>
+    <% end %>
+
+    <% @finished_polls.each do |poll| %>
+      <tr class="active">
+        <td><%= poll.poll_name %></td>
+        <td><%=poll.status%></td>
+        <td><%=poll.deadline%></td>
+        <td align="right"><button type="button" class="btn btn-primary">VIEW FINAL RESULTS</button></td>
+        <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>
+      </tr>
+    <% end %>
 
         </tbody>
 
