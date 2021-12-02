@@ -102,7 +102,6 @@ function submitVotes() {
     }
 
     votingData["person"] = username
-    votingData["poll_identifier"] = poll["poll_identifier"]
     votingData["votes_per_person"] = maxNumVotes
     votingData["votes_per_timeslot"] = votesPerPerson
     votingData["votes"] = Array.from(votes)

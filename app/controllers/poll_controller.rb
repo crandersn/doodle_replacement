@@ -23,7 +23,7 @@ class PollController < ApplicationController
   def create
 
     # check to see if params made it to the create method
-    poll = Poll.create!(poll_identifier: "12345", poll_name: flash[:title], poll_description: flash[:notes],
+    poll = Poll.create!(poll_name: flash[:title], poll_description: flash[:notes],
                         meeting_location: flash[:location], votes_per_timeslot: flash[:votes_per_timeslot], votes_per_person: flash[:votes_per_person],
                         deadline: flash[:deadline], status: "inactive", admin_id: current_admin.id)
 
@@ -52,7 +52,7 @@ class PollController < ApplicationController
 
     poll_identifier = params[:poll_identifier]
 
-    @poll = Poll.where("poll_identifier = '#{poll_identifier}'").first
+    @poll = Poll.find(poll_identifier)
     @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
     @title = @poll.poll_name
 

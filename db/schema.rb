@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 20211127221641) do
   end
 
   create_table "polls", force: :cascade do |t|
-    t.string  "poll_identifier"
     t.string  "poll_name"
     t.string  "poll_description"
     t.string  "meeting_location"
