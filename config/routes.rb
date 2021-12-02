@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post 'poll/create' => 'poll#create'
 
   # poll results page
-  post 'results/get_results' => 'results#get_results', as: :admin_root
+  get 'results/get_results' => 'results#get_results'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
