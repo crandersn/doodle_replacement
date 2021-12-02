@@ -13,7 +13,7 @@ calendar.currentView = schedule.CalendarView.Timetable;
 calendar.theme = "light";
 //format the header
 calendar.timetableSettings.titleFormat = "d MMMM <br/> <b>dddd</b>";
-calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(30);
+calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(15);
 //sets how many days will be changed on a scroll click
 calendar.timetableSettings.scrollStep = 7;
 calendar.timetableSettings.showDayHeader = true;
@@ -102,7 +102,6 @@ function submitVotes() {
     }
 
     votingData["person"] = username
-    votingData["poll_identifier"] = poll["poll_identifier"]
     votingData["votes_per_person"] = maxNumVotes
     votingData["votes_per_timeslot"] = votesPerPerson
     votingData["votes"] = Array.from(votes)
