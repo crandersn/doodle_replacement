@@ -59,17 +59,6 @@ class PollController < ApplicationController
   end
 
 
-  def start
-
-    @poll_started = Poll.where("id = 1")
-
-
-    @not_started_polls = Poll.where("status = 'Not Started'")
-    @active_polls = Poll.where("status = 'Active'")
-    @finished_polls = Poll.where("status = 'Finished'")
-
-  end
-
   def cast_vote
 
     username = params[:person]

@@ -65,9 +65,12 @@
       <% @not_started_polls.each do |poll| %>
         <tr class="warning">
           <td><%= poll.poll_name %></td>
-          <td><%=poll.status%> <button type="button" class="btn btn-success btn-xs">START</button></td>
+<!--          <td><%#=poll.status%> <button type="button" class="btn btn-success btn-xs">START</button></td>-->
+          <td><%=poll.status%> <%= link_to 'Start', "start?start_poll="+poll.id.to_s , {class: 'btn btn-success btn-xs', type: 'button'} %></td>
+
+
           <td><%=poll.deadline%></td>
-          <td align="right"><button type="button" class="btn btn-secondary">EDIT</button></td>
+          <td align="right"><button type="button" class="btn btn-secondary">Edit</button></td>
           <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>
         </tr>
       <% end %>
@@ -75,9 +78,11 @@
       <% @active_polls.each do |poll| %>
       <tr class="success">
         <td><%= poll.poll_name %></td>
-        <td><%=poll.status%> <button type="button" class="btn btn-warning btn-xs">END</button> </td>
+<!--        <td><%#=poll.status%> <button type="button" class="btn btn-warning btn-xs">END</button> </td>-->
+        <td><%=poll.status%> <%= link_to 'End', "end?end_poll="+poll.id.to_s , {class: 'btn btn-warning btn-xs', type: 'button'} %></td>
+
         <td><%=poll.deadline%></td>
-        <td align="right"><button type="button" class="btn btn-primary">VIEW LIVE RESULTS</button></td>
+        <td align="right"><button type="button" class="btn btn-primary">View Live Results</button></td>
         <td class="light"><button type="button" class="btn btn-danger text-center" data-toggle="tooltip" data-placement="right" title="Delete Poll">X</button></td>
       </tr>
     <% end %>
@@ -87,7 +92,7 @@
         <td><%= poll.poll_name %></td>
         <td><%=poll.status%></td>
         <td><%=poll.deadline%></td>
-        <td align="right"><button type="button" class="btn btn-primary">VIEW FINAL RESULTS</button></td>
+        <td align="right"><button type="button" class="btn btn-primary">View Final Results</button></td>
         <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>
       </tr>
     <% end %>
@@ -96,8 +101,9 @@
 
   </table>
 
-  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>
-<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%#= @test %> ?</button></div>-->
+
+<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>-->
+  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%= @test %> ?</button></div>
 
   <%# @polls.each do |poll| %>
 <!--    <p> <%#= poll.poll_name %></p>-->
