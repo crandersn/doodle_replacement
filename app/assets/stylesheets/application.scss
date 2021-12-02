@@ -49,3 +49,12 @@
   text-decoration: none;
   color: #04A3ED;
 }
+
+.create_new_button {
+  position:relative;
+  top:100px;
+  left:50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  font-weight: bold;
+}

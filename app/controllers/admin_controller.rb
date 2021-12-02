@@ -42,4 +42,10 @@ class AdminController < ApplicationController
 
   end
 
+  def new
+
+    redirect_to poll_new_url
+
+  end
+
 end
