@@ -15,14 +15,14 @@
     <td>123</td>
     <td>12-10-2021</td>
     <td>11:00am-11:30am</td>
-    <td>1</td>
+    <td>False</td>
   </tbody>
   <% @timeslots.each do |timeslot| %>
     <% if timeslot.available == false %>
       <% @reservers.each do |reserver| %>
         <td><%= reserver.name %></td>
         <td><%= timeslot.date %></td>
-        <td><%= reserver.timeslot%></td>
+        <td><%= timeslot.start_time %></td>
         <td>False</td>
         </tr>
       <% end %>
@@ -33,7 +33,7 @@
       <% @reservers.each do |reserver| %>
         <td><%= reserver.name %></td>
         <td><%= timeslot.date %></td>
-        <td><%= reserver.timeslot%></td>
+        <td><%= timeslot.start_time %></td>
         <td>True</td>
         </tr>
       <% end %>
