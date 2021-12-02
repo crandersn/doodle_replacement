@@ -59,6 +59,7 @@ class PollController < ApplicationController
 
   end
 
+
   def cast_vote
 
     username = params[:person]
