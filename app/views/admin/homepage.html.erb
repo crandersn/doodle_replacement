@@ -70,8 +70,13 @@
 
 
           <td><%=poll.deadline%></td>
-          <td align="right"><button type="button" class="btn btn-secondary">Edit</button></td>
-<!--          <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>-->
+<!--          <td align="right"><button type="button" class="btn btn-secondary">Edit</button></td>-->
+
+<!--          <td><%#= link_to "Edit", "edit?edit_poll="+poll.id.to_s , {class: 'btn btn-secondary', type: 'button'} %></td>-->
+          <td align="right"><%= link_to "Edit <span class='glyphicon glyphicon-pencil'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-default', type: 'button'} %></td>
+
+
+          <!--          <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>-->
           <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
 
         </tr>

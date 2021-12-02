@@ -48,4 +48,9 @@ class AdminController < ApplicationController
 
   end
 
+  def edit
+    poll_edited = params["edit_poll"]
+    redirect_to poll_edit_url(:id => poll_edited)
+  end
+
 end

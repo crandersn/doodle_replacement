@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'admin/end' => 'admin#end'
   get 'admin/delete' => 'admin#delete'
   get 'admin/new' => 'admin#new'
+  get 'admin/edit' => 'admin#edit'
 
 
   # define poll controller routes
