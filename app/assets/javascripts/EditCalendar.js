@@ -2,7 +2,7 @@ var schedule = MindFusion.Scheduling;
 
 // create a new instance of the calendar from a div with id "calendar"
 //declared in the HTML page
-calendar = new schedule.Calendar(document.getElementById("calendar"));
+calendar = new schedule.Calendar(document.getElementById("edit-calendar"));
 calendar.useForms = false;
 
 calendar.setLicenseKey("UVVNUCU1Qk1aJTIwWiUwQ1ElMDdTJTFBUUNRJTIyUiUwRFIlMDdQJTA2UyUxMSUzQyUxMFAlMENSJTBEU0NTS1MlMERSJTBDJTA5JTBEJTEwTiUxMyUwMCUwRiUwQyUwMiUwRSUwRCUwRSUwRCUwNiUwNiUxMSUxMSUwMCUwQSUwMiUwRkMlMEYlMEElMDAlMDYlMEQlMTAlMDZK")
@@ -32,7 +32,7 @@ var currDay = schedule.DateTime.today();
 calendar.timetableSettings.dates.clear();
 
 for (var i = 1; i < 8; i++) {
-	calendar.timetableSettings.dates.add(currDay.addDays(-1 * currDay.dayOfWeek + i));
+    calendar.timetableSettings.dates.add(currDay.addDays(-1 * currDay.dayOfWeek + i));
 }
 
 
@@ -42,41 +42,72 @@ calendar.itemDoubleClick.addEventListener(handleItemDoubleClick);
 // handle the selectionEnd event to show the custom form for item creation
 calendar.selectionEnd.addEventListener(handleSelectionEnd);
 
+// define time zone offsets
+var time_zone_offsets = {
+    "PST": "8",
+    "MST": "7",
+    "CST": "6",
+    "EST": "5"
+}
+
+// place timeslots on the calendar
+var timeslots = $('.calendar_data').data('timeslot-data');
+var time_zone = $('.calendar_data').data('time-zone');
+var i = 0
+var length = timeslots.length
+
+while (i < length) {
+
+    var item = new schedule.Item();
+    var timeslot = timeslots[i];
+
+    // shift startTimes depending on time zone selected
+    var current_time_zone_offest = ((new Date()).getTimezoneOffset()) / 60;
+    var selected_time_zone_offset = 0;
+    if (time_zone != "My Time Zone"){
+        selected_time_zone_offset = time_zone_offsets[time_zone];
+    } else {
+        selected_time_zone_offset = current_time_zone_offest
+    }
+    time_adjustment = current_time_zone_offest - selected_time_zone_offset;
+
+    item.startTime = (new schedule.DateTime(new Date(timeslot["start_time"]))).addHours(time_adjustment);
+    item.endTime = (new schedule.DateTime(new Date(timeslot["end_time"]))).addHours(time_adjustment);
+
+    item.subject = timeslot["notes"];
+
+    calendar.schedule.items.add(item);
+
+    i += 1;
+}
+
 function handleItemDoubleClick(sender, args) {
-	// create and show the custom form
-	var form = new TimeForm(sender, args.item, "edit");
-	form.showForm();
+    // create and show the custom form
+    var form = new TimeForm(sender, args.item, "edit");
+    form.showForm();
 }
 
 function handleSelectionEnd(sender, args)  {
-	// create a new item with the start and end time of the selection
-	var item = new p.Item();
-	item.startTime = args.startTime;
-	item.endTime = args.endTime;
+    // create a new item with the start and end time of the selection
+    var item = new p.Item();
+    item.startTime = args.startTime;
+    item.endTime = args.endTime;
 
-	// create and show the custom form
-	var form = new TimeForm(sender, item, "new");
-	form.showForm();
+    // create and show the custom form
+    var form = new TimeForm(sender, item, "new");
+    form.showForm();
 }
 
+
+// TODO: EDIT submit poll method
 function submitPoll() {
 
     var pollData = {};
     var numAppointments = 0;
 
-   var selected_time_zone = $('.time_zone_info').data('time-zone');
-
-   var time_zone_offsets = {
-        "PST": "8",
-        "MST": "7",
-        "CST": "6",
-        "EST": "5"
-   }
+    var selected_time_zone = time_zone
 
     appointments = calendar.schedule.items.forEach(function(item, index){
-
-        console.log("before if: " + item.startTime);
-        console.log("before if: " + item.endTime);
 
         var time_adjustment = 0;
 
@@ -109,7 +140,7 @@ function submitPoll() {
 
     pollData["num_appointments"] = numAppointments
 
-    $.post("/poll/create", pollData, function(data, status){});
+    $.post("/poll/update", pollData, function(data, status){});
 }
 
 // render the calendar control

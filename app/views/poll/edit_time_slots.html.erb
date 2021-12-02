@@ -1,0 +1,24 @@
+<h1 style="text-align: center">Poll Title: <%= @title %></h1>
+<h3 style="margin-bottom: 20px; text-align: center">
+  <% if @time_zone == "My Time Zone" %>
+    Poll Time Zone: <%= Time.now.zone %>
+  <% else %>
+    Poll Time Zone: <%= @time_zone %>
+  <% end %>
+</h3>
+
+<div style="width: 100%; height: 80%;">
+
+  <%= content_tag :div, id: 'edit-calendar', style: "height: 100%; width: 100%", class: "calendar_data", data: {time_zone: @time_zone, timeslot_data: @timeslots} do %>
+  <% end %>
+</div>
+
+<div style="margin-top: 15px">
+  <%= button_tag "Save Poll", {class: "btn btn-primary col-md-2 col-md-offset-5", onclick: "submitPoll()"} %>
+</div>
+
+<% content_for :calendar_javascript do %>
+  <%= javascript_include_tag "MindFusion.Scheduling.js" %>
+  <%= javascript_include_tag "EditCalendar.js" %>
+  <%= javascript_include_tag "TimeForm.js" %>
+<% end %>
