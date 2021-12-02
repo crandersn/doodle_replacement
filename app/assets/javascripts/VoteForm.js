@@ -21,7 +21,7 @@ VoteForm.prototype.drawContent = function () {
 
     // create row for timeslot title
     row = this.row();
-    row.innerHTML = "<p>Notes:" + this.item.subject + "</p>"
+    row.innerHTML = "<p>" + this.item.details +  "</p>"
     content.appendChild(row);
 
     // Create a row for the startTime
@@ -69,8 +69,23 @@ VoteForm.prototype.drawButtons = function () {
     return buttons;
 };
 
+// TODO: You may want to add alert messages to both of these functions
 VoteForm.prototype.onVoteButtonClick = function (e) {
 
+    if (numVotesCast >= maxNumVotes){
+        alert("You max only vote on a maximum of " + maxNumVotes + " timeslots.")
+    } else if (this.item.subject == "Reserved By Me"){
+        alert("You have already voted on this timeslot.")
+    } else {
+        this.item.subject = "Reserved By Me"
+
+        var db_item_id = timeslotMappings[this.item.id]
+
+        // add db id to set of items that have been noted on
+        votes.add(db_item_id)
+
+        numVotesCast += 1
+    }
     
     // close the form
     this.closeForm();
@@ -80,5 +95,15 @@ VoteForm.prototype.onVoteButtonClick = function (e) {
 };
 
 VoteForm.prototype.onRemoveVoteButtonClick = function (e) {
+
+    if (this.item.subject == "Reserved By Me") {
+        this.item.subject = "Available"
+        var db_item_id = timeslotMappings[this.item.id]
+        votes.delete(db_item_id)
+        numVotesCast -= 1
+    }
+
     this.closeForm();
+
+    this.calendar.repaint(true);
 };
