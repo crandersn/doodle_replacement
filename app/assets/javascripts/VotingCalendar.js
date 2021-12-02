@@ -13,7 +13,7 @@ calendar.currentView = schedule.CalendarView.Timetable;
 calendar.theme = "light";
 //format the header
 calendar.timetableSettings.titleFormat = "d MMMM <br/> <b>dddd</b>";
-calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(30);
+calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(15);
 //sets how many days will be changed on a scroll click
 calendar.timetableSettings.scrollStep = 7;
 calendar.timetableSettings.showDayHeader = true;

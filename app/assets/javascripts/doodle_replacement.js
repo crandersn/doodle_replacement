@@ -13,16 +13,19 @@ calendar.currentView = schedule.CalendarView.Timetable;
 calendar.theme = "light";
 //format the header
 calendar.timetableSettings.titleFormat = "d MMMM <br/> <b>dddd</b>";
-calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(30);
+calendar.timetableSettings.cellTime = schedule.TimeSpan.fromMinutes(15);
 //sets how many days will be changed on a scroll click
 calendar.timetableSettings.scrollStep = 7;
 calendar.timetableSettings.showDayHeader = true;
-calendar.timetableSettings.cellSize = 20;
+calendar.timetableSettings.cellSize = 28;
 
 // set the start time to 05:00 AM
 calendar.timetableSettings.startTime  = 300;
 // set the end time to 22:00 PM
 calendar.timetableSettings.endTime = 1380;
+
+// Don't Use International Time
+calendar.timetableSettings.twelveHourFormat = true;
 
 //get the current date
 var currDay = schedule.DateTime.today();
