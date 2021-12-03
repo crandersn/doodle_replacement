@@ -4,7 +4,6 @@ class ResultsController < ApplicationController
     @poll = Poll.find(params[:poll_id])
     @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
     @title = @poll.poll_name
-    #@reservers = Reserver.where("timeslot_id = '#{@poll.id}'")
 
     puts ('hi bob')
     puts(@title)
@@ -17,7 +16,6 @@ class ResultsController < ApplicationController
       @reservers = Reserver.where("timeslot_id = '#{timeslot.id}'")
 
       slot = {}
-      #slot[:start] = timeslot.start_time
 
       raw_datetime_start = timeslot.start_time.delete(",").split(" ")
       
@@ -45,7 +43,7 @@ class ResultsController < ApplicationController
       seconds_end = 0
       t_end = Time.utc(year_end,month_end,day_month_end,hours_end,minutes_end,seconds_end)
       slot[:end] = t_end.localtime.strftime("%Y-%m-%d %l:%M:%S %p")
-      #slot[:end] = timeslot.end_time
+
       slot[:available] = timeslot.available
       slot[:num_votes] = timeslot.num_votes
 
