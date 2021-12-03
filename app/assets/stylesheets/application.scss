@@ -49,3 +49,32 @@
   text-decoration: none;
   color: #04A3ED;
 }
+
+.create_new_button {
+  position:relative;
+  top:100px;
+  left:50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  font-weight: bold;
+}
+
+.send_invites_button {
+  position:relative;
+  top:0px;
+  left:50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.invite_header {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  border: 3px black;
+  padding: 80px;
+  font-weight: bold;
+
+}

@@ -9,7 +9,8 @@
 
 poll1 = {
   :poll_name => "Lab 3 Checkoff",
-  :poll_identifier => "3",
+  :time_zone => 'CST',
+  # :poll_identifier => "3",
   :poll_description => "Signup for Lab 3 Checkoff. Website should be functional.",
   :meeting_location => "1212 SC",
   :votes_per_timeslot => "2",
@@ -21,13 +22,15 @@ poll1 = {
 Poll.create!(poll1)
 
 invitee1 = {
-  :phone_number => "111-867-5309",
+  :name => 'Bob',
+  :phone_number => "(1)111-867-5309",
   :poll_id => 1
 }
 Invitee.create!(invitee1)
 
 invitee2 = {
-  :phone_number => "999-999-9999",
+  :name => 'Alice',
+  :phone_number => "(1)999-999-9999",
   :poll_id => 1
 }
 Invitee.create!(invitee2)
@@ -62,7 +65,8 @@ Reserver.create!(reserver1)
 
 poll2 = {
   :poll_name => "Lab 2 Checkoff",
-  :poll_identifier => "2",
+  :time_zone => 'CST',
+  # :poll_identifier => "2",
   :poll_description => "Signup for Lab 2 Checkoff. Sensor should be working.",
   :meeting_location => "1212 SC",
   :votes_per_timeslot => "1",
@@ -99,7 +103,8 @@ Timeslot.create!(timeslot2_2)
 
 poll3 = {
   :poll_name => "Lab 1 Checkoff",
-  :poll_identifier => "1",
+  :time_zone => 'CST',
+  # :poll_identifier => "1",
   :poll_description => "Signup for Lab 1 Checkoff. Temp sensor and site check.",
   :meeting_location => "1212 SC",
   :votes_per_timeslot => "1",
@@ -114,7 +119,8 @@ Poll.create!(poll3)
 
 poll4 = {
   :poll_name => "TA Office Hours - Week 14",
-  :poll_identifier => "1",
+  :time_zone => 'CST',
+  # :poll_identifier => "1",
   :poll_description => "Reservations for TA office hours",
   :meeting_location => "1212 SC",
   :votes_per_timeslot => "1",
@@ -129,7 +135,8 @@ Poll.create!(poll4)
 
 poll5 = {
   :poll_name => "TA Office Hours - Week 15",
-  :poll_identifier => "1",
+  :time_zone => 'CST',
+  # :poll_identifier => "1",
   :poll_description => "Reservations for TA office hours",
   :meeting_location => "1212 SC",
   :votes_per_timeslot => "1",
@@ -144,7 +151,8 @@ Poll.create!(poll5)
 
 poll6 = {
   :poll_name => "TA Office Hours - Week 16",
-  :poll_identifier => "1",
+  :time_zone => 'CST',
+  # :poll_identifier => "1",
   :poll_description => "Reservations for TA office hours",
   :meeting_location => "1212 SC",
   :votes_per_timeslot => "1",

@@ -68,10 +68,20 @@
 <!--          <td><%#=poll.status%> <button type="button" class="btn btn-success btn-xs">START</button></td>-->
           <td><%=poll.status%> <%= link_to 'Start', "start?start_poll="+poll.id.to_s , {class: 'btn btn-success btn-xs', type: 'button'} %></td>
 
+          <% if not poll.deadline.eql? nil %>
+            <td>-</td>
+          <% else %>
+            <td><%=poll.deadline%></td>
+          <% end %>
 
-          <td><%=poll.deadline%></td>
-          <td align="right"><button type="button" class="btn btn-secondary">Edit</button></td>
-          <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>
+          <!--          <td align="right"><button type="button" class="btn btn-secondary">Edit</button></td>-->
+<!--          <td><%#= link_to "Edit", "edit?edit_poll="+poll.id.to_s , {class: 'btn btn-secondary', type: 'button'} %></td>-->
+          <td align="right"><%= link_to "Edit <span class='glyphicon glyphicon-pencil'></span>".html_safe, "edit?edit_poll="+poll.id.to_s , {class: 'btn btn-default', type: 'button'} %></td>
+
+
+          <!--          <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>-->
+          <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
+
         </tr>
       <% end %>
 
@@ -81,9 +91,17 @@
 <!--        <td><%#=poll.status%> <button type="button" class="btn btn-warning btn-xs">END</button> </td>-->
         <td><%=poll.status%> <%= link_to 'End', "end?end_poll="+poll.id.to_s , {class: 'btn btn-warning btn-xs', type: 'button'} %></td>
 
-        <td><%=poll.deadline%></td>
+        <% if not poll.deadline.eql? nil%>
+          <td><%=poll.deadline%></td>
+        <% else %>
+          <td><%=poll.deadline%></td>
+        <% end %>
+
         <td align="right"><button type="button" class="btn btn-primary">View Live Results</button></td>
-        <td class="light"><button type="button" class="btn btn-danger text-center" data-toggle="tooltip" data-placement="right" title="Delete Poll">X</button></td>
+<!--        <td class="light"><button type="button" class="btn btn-danger text-center" data-toggle="tooltip" data-placement="right" title="Delete Poll"><span class="glyphicon glyphicon-remove"></span></button></td>-->
+
+        <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
+
       </tr>
     <% end %>
 
@@ -91,9 +109,18 @@
       <tr class="active">
         <td><%= poll.poll_name %></td>
         <td><%=poll.status%></td>
-        <td><%=poll.deadline%></td>
+
+
+        <% if not poll.deadline.eql? nil%>
+          <td><%=poll.deadline%></td>
+        <% else %>
+          <td><%=poll.deadline%></td>
+        <% end %>
+
+
         <td align="right"><button type="button" class="btn btn-primary">View Final Results</button></td>
-        <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>
+<!--        <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>-->
+        <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
       </tr>
     <% end %>
 
@@ -102,8 +129,9 @@
   </table>
 
 
-<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>-->
-  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%= @test %> ?</button></div>
+<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold" type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>-->
+<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%#= @test %> ?</button></div>-->
+  <%=  button_to 'Create New Poll', "new" , {class: 'btn btn-secondary create_new_button', type: 'button', method: 'get'} %>
 
   <%# @polls.each do |poll| %>
 <!--    <p> <%#= poll.poll_name %></p>-->

@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20211127221641) do
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
 
   create_table "invitees", force: :cascade do |t|
+    t.string  "name"
     t.string  "phone_number"
     t.integer "poll_id"
   end
