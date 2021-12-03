@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   post 'poll/cast_vote' => "poll#cast_vote"
   get 'poll/success' => "poll#success"
 
+  # poll results page
+  get 'results/get_results' => 'results#get_results'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
