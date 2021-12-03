@@ -1,6 +1,26 @@
-<h1 style="text-align: center">Create New Poll</h1>
+<head>
+  <div class="menu">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <%= link_to 'Current Polls', admin_root_path %>
+<!--        <a href="homepage">Current Polls</a>-->
+      </div>
+      <div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a>Logged in as: <%= @current_user %></a></li>
 
-<div class="row">
+          <li> <%= link_to 'Log Out', destroy_admin_session_path, method: :delete %> </li>
+          <!--          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>-->
+        </ul>
+      </div>
+    </div>
+  </div>
+</head>
+
+<body>
+<h1 style="text-align: center; position: relative; top: 80px; margin:auto">Create New Poll</h1>
+
+<div class="row" style="position: relative; top: 100px">
   <div class = "col-md-4 col-md-offset-4">
     <%= form_tag '/poll/choose_time_slots', method: :post, name: "pollForm", onsubmit: "return validateNewPollForm()" do %>
 
@@ -49,3 +69,4 @@
 <% content_for :form_validation_javascript do %>
   <%= javascript_include_tag "FormValidation.js" %>
 <% end %>
+</body>

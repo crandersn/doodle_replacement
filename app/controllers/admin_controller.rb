@@ -3,9 +3,9 @@ class AdminController < ApplicationController
   def homepage
     @test = params[:test]
     @current_user = current_admin.email
-    @not_started_polls = Poll.where("status = 'Not Started'")
-    @active_polls = Poll.where("status = 'Active'")
-    @finished_polls = Poll.where("status = 'Finished'")
+    @not_started_polls = Poll.where("status = 'Not Started' AND admin_id=" + current_admin.id.to_s)
+    @active_polls = Poll.where("status = 'Active' AND admin_id=" + current_admin.id.to_s)
+    @finished_polls = Poll.where("status = 'Finished' AND admin_id=" + current_admin.id.to_s)
   end
 
   def start
@@ -96,9 +96,9 @@ class AdminController < ApplicationController
 
     @client = Twilio::REST::Client.new(account_sid, auth_token)
 
-
     @invitees.each do |invitee|
 
+      begin
       message_body = 'Hello ' + invitee.name + '! You are invited to vote on this poll: ' + poll.poll_name + ' @ '
       message = @client.messages.create(
         from: '+15052278737',
@@ -107,6 +107,11 @@ class AdminController < ApplicationController
       )
 
       puts message.sid
+
+      rescue
+        x=1
+      end
+
     end
 
     redirect_to admin_root_url

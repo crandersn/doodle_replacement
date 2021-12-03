@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   devise_scope :admin do
     root to: "devise/sessions#new"
+    # delete "/users/sign_out" => "devise/sessions#destroy"
+
   end
 
   # admin homepage
@@ -19,7 +21,7 @@ Rails.application.routes.draw do
   get 'admin/delete_invitee' => 'admin#delete_invitee'
   get 'admin/add_invitee' => 'admin#add_invitee'
   get 'admin/send_invites' => 'admin#send_invites'
-
+  get 'admin/log_out' => 'admin#log_out'
 
 
   # define poll controller routes
