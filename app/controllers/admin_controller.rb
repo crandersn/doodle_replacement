@@ -3,9 +3,9 @@ class AdminController < ApplicationController
   def homepage
     @test = params[:test]
     @current_user = current_admin.email
-    @not_started_polls = Poll.where("status = 'Not Started'")
-    @active_polls = Poll.where("status = 'Active'")
-    @finished_polls = Poll.where("status = 'Finished'")
+    @not_started_polls = Poll.where("status = 'Not Started' AND admin_id=" + current_admin.id.to_s)
+    @active_polls = Poll.where("status = 'Active' AND admin_id=" + current_admin.id.to_s)
+    @finished_polls = Poll.where("status = 'Finished' AND admin_id=" + current_admin.id.to_s)
   end
 
   def start
@@ -117,5 +117,7 @@ class AdminController < ApplicationController
     redirect_to admin_root_url
 
   end
+
+
 
 end

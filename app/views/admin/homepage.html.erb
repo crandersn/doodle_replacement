@@ -2,12 +2,14 @@
   <div class="menu">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a href="#">Current Polls</a>
+        <a href="homepage">Current Polls</a>
       </div>
       <div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a>Logged in as: lhageman20@gmail.com</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
+          <li><a>Logged in as: <%= @current_user %></a></li>
+
+          <li> <%= link_to 'Log Out', destroy_admin_session_path, method: :delete %> </li>
+<!--          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>-->
         </ul>
       </div>
     </div>
@@ -30,78 +32,32 @@
     </thead>
 
     <tbody>
-<!--      <tr class="warning">-->
-<!--        <td>TA Office Hours - Week 14</td>-->
-<!--        <td>Not Started <button type="button" class="btn btn-success btn-xs">START</button></td>-->
-<!--        <td>-</td>-->
-<!--        <td><button type="button" class="btn btn-secondary">EDIT</button></td>-->
-<!--        <td><button type="button" class="btn btn-secondary text-center">X</button></td>-->
-<!--      </tr>-->
-
-<!--      <tr class="success">-->
-<!--        <td>Lab 3 Checkoff</td>-->
-<!--        <td>Active <button type="button" class="btn btn-warning btn-xs">END</button></td>-->
-<!--        <td>11:59 PM, 12-10-2021</td>-->
-<!--        <td><button type="button" class="btn btn-info">VIEW CURRENT RESULTS</button>  </td>-->
-<!--        <td><button type="button" class="btn btn-secondary text-center">X</button></td>-->
-<!--      </tr>-->
-
-<!--      <tr class="active">-->
-<!--        <td>Lab 1 Checkoff</td>-->
-<!--        <td>Finished</td>-->
-<!--        <td>11:59 PM, 11-2-2021</td>-->
-<!--        <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>-->
-<!--        <td><button type="button" class="btn btn-secondary text-center">X</button></td>-->
-<!--      </tr>-->
-
-<!--      <tr class="active">-->
-<!--        <td>Lab 1 Checkoff</td>-->
-<!--        <td>Finished</td>-->
-<!--        <td>11:59 PM, 10-6-2021</td>-->
-<!--        <td><button type="button" class="btn btn-info">VIEW FINAL RESULTS</button></td>-->
-<!--        <td class="light"><button type="button" class="btn btn-secondary text-center">X</button></td>-->
-<!--      </tr>-->
 
       <% @not_started_polls.each do |poll| %>
         <tr class="warning">
           <td><%= poll.poll_name %></td>
-<!--          <td><%#=poll.status%> <button type="button" class="btn btn-success btn-xs">START</button></td>-->
           <td><%=poll.status%> <%= link_to 'Start', "start?start_poll="+poll.id.to_s , {class: 'btn btn-success btn-xs', type: 'button'} %></td>
-
           <% if not poll.deadline.eql? nil %>
             <td>-</td>
           <% else %>
             <td><%=poll.deadline%></td>
           <% end %>
-
-          <!--          <td align="right"><button type="button" class="btn btn-secondary">Edit</button></td>-->
-<!--          <td><%#= link_to "Edit", "edit?edit_poll="+poll.id.to_s , {class: 'btn btn-secondary', type: 'button'} %></td>-->
           <td align="right"><%= link_to "Edit <span class='glyphicon glyphicon-pencil'></span>".html_safe, "edit?edit_poll="+poll.id.to_s , {class: 'btn btn-default', type: 'button'} %></td>
-
-
-          <!--          <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>-->
           <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
-
         </tr>
       <% end %>
 
       <% @active_polls.each do |poll| %>
       <tr class="success">
         <td><%= poll.poll_name %></td>
-<!--        <td><%#=poll.status%> <button type="button" class="btn btn-warning btn-xs">END</button> </td>-->
-        <td><%=poll.status%> <%= link_to 'End', "end?end_poll="+poll.id.to_s , {class: 'btn btn-warning btn-xs', type: 'button'} %></td>
-
+        <td><%=poll.status%> <%= link_to 'Invite', "invite?poll_invite="+poll.id.to_s , {class: 'btn btn-info btn-xs', type: 'button'} %> <%= link_to 'End', "end?end_poll="+poll.id.to_s , {class: 'btn btn-warning btn-xs', type: 'button'} %></td>
         <% if not poll.deadline.eql? nil%>
           <td><%=poll.deadline%></td>
         <% else %>
           <td><%=poll.deadline%></td>
         <% end %>
-
         <td align="right"><button type="button" class="btn btn-primary">View Live Results</button></td>
-<!--        <td class="light"><button type="button" class="btn btn-danger text-center" data-toggle="tooltip" data-placement="right" title="Delete Poll"><span class="glyphicon glyphicon-remove"></span></button></td>-->
-
         <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
-
       </tr>
     <% end %>
 
@@ -109,17 +65,12 @@
       <tr class="active">
         <td><%= poll.poll_name %></td>
         <td><%=poll.status%></td>
-
-
         <% if not poll.deadline.eql? nil%>
           <td><%=poll.deadline%></td>
         <% else %>
           <td><%=poll.deadline%></td>
         <% end %>
-
-
         <td align="right"><button type="button" class="btn btn-primary">View Final Results</button></td>
-<!--        <td class="light"><button type="button" class="btn btn-danger text-center">X</button></td>-->
         <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
       </tr>
     <% end %>
@@ -128,14 +79,7 @@
 
   </table>
 
-
-<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold" type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>-->
-<!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%#= @test %> ?</button></div>-->
   <%=  button_to 'Create New Poll', "new" , {class: 'btn btn-secondary create_new_button', type: 'button', method: 'get'} %>
-
-  <%# @polls.each do |poll| %>
-<!--    <p> <%#= poll.poll_name %></p>-->
-  <%# end %>
 
 </body>
 
