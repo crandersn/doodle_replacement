@@ -53,7 +53,6 @@ class ResultsController < ApplicationController
       reserver_string = ""
       @reservers.each do |reserver|
         reserver_string += reserver.name + ", "
-        #reserver_arr.push(reserver.name)
       end
       reserver_string = reserver_string[0...-2]
       if reserver_string == ""
