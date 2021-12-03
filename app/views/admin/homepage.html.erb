@@ -38,9 +38,9 @@
           <td><%= poll.poll_name %></td>
           <td><%=poll.status%> <%= link_to 'Start', "start?start_poll="+poll.id.to_s , {class: 'btn btn-success btn-xs', type: 'button'} %></td>
           <% if not poll.deadline.eql? nil %>
-            <td>-</td>
-          <% else %>
             <td><%=poll.deadline%></td>
+          <% else %>
+            <td>-</td>
           <% end %>
           <td align="right"><%= link_to "Edit <span class='glyphicon glyphicon-pencil'></span>".html_safe, "edit?edit_poll="+poll.id.to_s , {class: 'btn btn-default', type: 'button'} %></td>
           <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
@@ -54,7 +54,7 @@
         <% if not poll.deadline.eql? nil%>
           <td><%=poll.deadline%></td>
         <% else %>
-          <td><%=poll.deadline%></td>
+          <td>-</td>
         <% end %>
 <!--        <td align="right"><button type="button" class="btn btn-primary">View Live Results</button></td>-->
         <td align="right"><%= link_to "View Live Results", results_get_results_url(:poll_id => poll.id) , {class: 'btn btn-primary', type: 'button'} %></td>
@@ -69,7 +69,7 @@
         <% if not poll.deadline.eql? nil%>
           <td><%=poll.deadline%></td>
         <% else %>
-          <td><%=poll.deadline%></td>
+          <td>-</td>
         <% end %>
 <!--        <td align="right"><button type="button" class="btn btn-primary">View Final Results</button></td>-->
         <td align="right"><%= link_to "View Final Results", results_get_results_url(:poll_id => poll.id) , {class: 'btn btn-primary', type: 'button'} %></td>
