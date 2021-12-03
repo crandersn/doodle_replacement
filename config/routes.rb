@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   get 'poll/success' => "poll#success"
   get 'poll/unauthorized' => "poll#unauthorized"
 
+  # poll results page
+  get 'results/get_results' => 'results#get_results'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

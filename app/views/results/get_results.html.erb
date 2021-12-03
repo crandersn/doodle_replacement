@@ -1,0 +1,38 @@
+
+<h1 style="text-align: center">Poll Results for Poll: <%= @title %></h1>
+
+<table id="poll_table" style="width:90%;margin:0 auto;font-size:20px;position:relative;top:65px" class="table table-striped table-sm">
+  <thead>
+  <tr>
+    <th scope="col">Reserver ID</th>
+    <th scope="col">Start Time</th>
+    <th scope="col">End Time</th>
+    <th scope="col">Number of Votes</th>
+    <th scope="col">Available</th>
+  </tr>
+  <tbody>
+  <tr>
+  </tbody>
+
+  <% @hash_arr.each do |timeslot| %>
+    <%if timeslot[:available] == false %>
+        <td><%=timeslot[:reservers]%></td>
+        <td><%=timeslot[:start]%></td>
+        <td><%=timeslot[:end]%></td>
+        <td><%=timeslot[:num_votes]%></td>
+        <td><%=timeslot[:available]%></td>
+        </tr>
+        <% end %>
+    <%end %>
+  <% @hash_arr.each do |timeslot| %>
+    <%if timeslot[:available] == true %>
+        <td><%=timeslot[:reservers]%></td>
+        <td><%=timeslot[:start]%></td>
+        <td><%=timeslot[:end]%></td>
+        <td><%=timeslot[:num_votes]%></td>
+        <td><%=timeslot[:available]%></td>
+        </tr>
+    <% end %>
+  <% end %>
+  </thead>
+</table>
