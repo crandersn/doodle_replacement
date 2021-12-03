@@ -66,13 +66,6 @@ class ResultsController < ApplicationController
       @hash_arr.push(slot)
     end
 
-    # @hash_arr_dates = []
-    # datesHash = {}
-    # @timeslots.each do |timeslot|
-    #   datesHash[timeslot.id] = timeslot.date
-    #   @hash_arr_dates.push(datesHash)
-    # end
-    #
     puts(@hash_arr)
 
   end
