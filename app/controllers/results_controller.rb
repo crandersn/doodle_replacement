@@ -43,7 +43,6 @@ class ResultsController < ApplicationController
       slot[:available] = timeslot.available
       slot[:num_votes] = timeslot.num_votes
 
-      reserverHash = {timeslot.id => []}
       reserver_string = ""
       @reservers.each do |reserver|
         reserver_string += reserver.name + ", "
