@@ -85,6 +85,7 @@ class AdminController < ApplicationController
 
   def send_invites
 
+    # test
     id = flash[:poll_id]
     @invitees = Invitee.where("poll_id = " + id.to_s)
 
