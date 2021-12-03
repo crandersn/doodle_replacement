@@ -54,6 +54,18 @@ class PollController < ApplicationController
     poll_identifier = params[:poll_identifier]
 
     @poll = Poll.find(poll_identifier)
+
+    puts(@poll.status)
+
+    # do not show poll unless it is active and not expired
+    if (@poll.status == "Not Started")
+      flash[:error] = "not started"
+      redirect_to '/poll/unauthorized'
+    elsif (@poll.status == "Finished")
+      flash[:error] = "poll over"
+      redirect_to '/poll/unauthorized'
+    end
+
     @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
     @title = @poll.poll_name
 
@@ -93,6 +105,10 @@ class PollController < ApplicationController
 
   def success
 
+  end
+
+  def unauthorized
+    @error = flash[:error]
   end
 
   def edit

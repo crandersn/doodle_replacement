@@ -106,7 +106,11 @@ function submitVotes() {
     votingData["votes_per_timeslot"] = votesPerPerson
     votingData["votes"] = Array.from(votes)
 
-    $.post("/poll/cast_vote", votingData, function(data, status){});
+    if (votes.size > 0){
+        $.post("/poll/cast_vote", votingData, function(data, status){});
+    } else {
+        alert("Please reserve at least one time slot before submitting.")
+    }
 }
 
 // render the calendar control

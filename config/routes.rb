@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'poll/vote' => "poll#vote"
   post 'poll/cast_vote' => "poll#cast_vote"
   get 'poll/success' => "poll#success"
+  get 'poll/unauthorized' => "poll#unauthorized"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
