@@ -60,9 +60,6 @@ class ResultsController < ApplicationController
         reserver_string = "No Reservers"
       end
       slot[:reservers] = reserver_string
-      #reserverHash[timeslot.id] = reserver_arr
-      #@hash_arr.push(reserverHash)
-      #
       @hash_arr.push(slot)
     end
 
