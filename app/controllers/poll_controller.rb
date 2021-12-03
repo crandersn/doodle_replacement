@@ -55,12 +55,14 @@ class PollController < ApplicationController
 
     @poll = Poll.find(poll_identifier)
 
+    puts(@poll.status)
+
     # do not show poll unless it is active and not expired
     if (@poll.status == "Not Started")
-      @error = "not started"
+      flash[:error] = "not started"
       redirect_to '/poll/unauthorized'
-    elsif (@poll.status == "Finished" or Date.parse(@poll.deadline).past?)
-      @error = "poll over"
+    elsif (@poll.status == "Finished")
+      flash[:error] = "poll over"
       redirect_to '/poll/unauthorized'
     end
 
@@ -106,7 +108,7 @@ class PollController < ApplicationController
   end
 
   def unauthorized
-
+    @error = flash[:error]
   end
 
   def edit
