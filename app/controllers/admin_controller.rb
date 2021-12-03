@@ -58,7 +58,7 @@ class AdminController < ApplicationController
     id = params["poll_invite"]
     @poll = Poll.find(id)
     @invitees = Invitee.where("poll_id = " + id)
-    # redirect_to admin_invite_url
+    # redirect_to root_path_url
   end
 
   def delete_invitee
