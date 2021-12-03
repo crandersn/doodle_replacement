@@ -26,7 +26,7 @@ class PollController < ApplicationController
     # check to see if params made it to the create method
     poll = Poll.create!(poll_name: flash[:title], time_zone: flash[:time_zone], poll_description: flash[:notes],
                         meeting_location: flash[:location], votes_per_timeslot: flash[:votes_per_timeslot], votes_per_person: flash[:votes_per_person],
-                        deadline: flash[:deadline], status: "inactive", admin_id: current_admin.id)
+                        deadline: flash[:deadline], status: "Not Started", admin_id: current_admin.id)
 
     num_appointments =  params["num_appointments"].to_i
     i = 0
@@ -70,18 +70,28 @@ class PollController < ApplicationController
 
     timeslots.each do |timeslot|
 
-      if (timeslot.num_votes + 1) >= votes_per_timeslot.to_i
+      '''  if (timeslot.num_votes + 1) >= votes_per_timeslot.to_i
         timeslot.update(num_votes: timeslot.num_votes + 1, available: false)
       else
         timeslot.update(num_votes: timeslot.num_votes + 1)
+      end '''
+
+
+      if votes_per_timeslot == "NaN" or (votes_per_timeslot.to_i > (timeslot.num_votes + 1))
+        timeslot.update(num_votes: timeslot.num_votes + 1)
+      else
+        timeslot.update(num_votes: timeslot.num_votes + 1, available: false)
       end
 
       Reserver.create!(name: username, timeslot_id: timeslot.id)
 
+      redirect_to '/poll/success'
+
     end
 
-    # TODO: User SHOULD NOT be redirected here in final product
-    redirect_to admin_root_path
+  end
+
+  def success
 
   end
 
@@ -116,7 +126,7 @@ class PollController < ApplicationController
     poll = Poll.find(flash[:id])
     poll.update(poll_name: flash[:title], time_zone: flash[:time_zone], poll_description: flash[:notes],
                         meeting_location: flash[:location], votes_per_timeslot: flash[:votes_per_timeslot], votes_per_person: flash[:votes_per_person],
-                        deadline: flash[:deadline], status: "inactive", admin_id: current_admin.id)
+                        deadline: flash[:deadline], status: "Not Started", admin_id: current_admin.id)
 
     # delete all timeslots associated with this poll
     Timeslot.where("poll_id = '#{poll.id}'").destroy_all

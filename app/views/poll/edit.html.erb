@@ -26,12 +26,23 @@
 
       <div class="field form-group">
         <%= label_tag :votes_per_timeslot, "Maximum Number of Votes Per Time Slot (Optional)" %>
-        <%= text_field_tag :votes_per_timeslot, @poll.votes_per_timeslot.to_i, :class => 'form-control', type: "number", name: "votes_per_timeslot" %>
+
+        <% if @poll.votes_per_timeslot != "" %>
+          <%= text_field_tag :votes_per_timeslot, @poll.votes_per_timeslot.to_i, :class => 'form-control', type: "number", name: "votes_per_timeslot" %>
+        <% else %>
+          <%= text_field_tag :votes_per_timeslot, "", :class => 'form-control', type: "number", name: "votes_per_timeslot" %>
+        <% end %>
       </div>
 
       <div class="field form-group">
         <%= label_tag :votes_per_person, "Maximum Number of Votes Per Person (Optional)" %>
-        <%= text_field_tag :votes_per_person, @poll.votes_per_person.to_i, :class => 'form-control', type: "number", name: "votes_per_person" %>
+
+        <% if @poll.votes_per_person != "" %>
+          <%= text_field_tag :votes_per_person, @poll.votes_per_person.to_i, :class => 'form-control', type: "number", name: "votes_per_person" %>
+        <% else %>
+          <%= text_field_tag :votes_per_person, "", :class => 'form-control', type: "number", name: "votes_per_person" %>
+        <% end %>
+
       </div>
 
       <div class="field form-group">
