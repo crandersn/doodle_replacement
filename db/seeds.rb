@@ -22,13 +22,15 @@ poll1 = {
 Poll.create!(poll1)
 
 invitee1 = {
-  :phone_number => "111-867-5309",
+  :name => 'Bob',
+  :phone_number => "(1)111-867-5309",
   :poll_id => 1
 }
 Invitee.create!(invitee1)
 
 invitee2 = {
-  :phone_number => "999-999-9999",
+  :name => 'Alice',
+  :phone_number => "(1)999-999-9999",
   :poll_id => 1
 }
 Invitee.create!(invitee2)

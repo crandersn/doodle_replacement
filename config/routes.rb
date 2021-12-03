@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   get 'admin/delete' => 'admin#delete'
   get 'admin/new' => 'admin#new'
   get 'admin/edit' => 'admin#edit'
+  get 'admin/invite' => 'admin#invite'
+  get 'admin/delete_invitee' => 'admin#delete_invitee'
+  get 'admin/add_invitee' => 'admin#add_invitee'
+
 
 
   # define poll controller routes

@@ -54,4 +54,34 @@ class AdminController < ApplicationController
     redirect_to poll_edit_url(:id => poll_edited)
   end
 
+  def invite
+    id = params["poll_invite"]
+    @poll = Poll.find(id)
+    @invitees = Invitee.where("poll_id = " + id)
+    # redirect_to admin_invite_url
+  end
+
+  def delete_invitee
+
+    id = params["delete_invitee"]
+    poll = Invitee.find(id).poll_id
+
+    invitee_deleted = Invitee.find(id)
+    invitee_deleted.destroy
+
+    redirect_to admin_invite_url(:poll_invite => poll)
+
+  end
+
+  def add_invitee
+
+    id = flash[:poll_id]
+
+    Invitee.create!(name: params[:name], phone_number: params[:phone_number], poll_id: id)
+    redirect_to admin_invite_url(:poll_invite => id)
+
+
+  end
+
+
 end
