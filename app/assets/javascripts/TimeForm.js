@@ -66,7 +66,7 @@ TimeForm.prototype.drawContent = function () {
     content.appendChild(row);
 
     var item = this.item;
-    control = this.createDropDownList({ id: "num_appointments", items: this.getIntervalLabels(), initValue: { value: 1, text: "1 Time Slot" },  addEmptyValue: false});
+    control = this.createDropDownList({ id: "num_appointments", items: this.getIntervalLabels(), initValue: 1,  addEmptyValue: false});
     control.element.style.width = "200px";
     this.addControl(control);
 
