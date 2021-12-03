@@ -1,7 +1,7 @@
 <h1 style="text-align: center">Poll Title: <%= @title %></h1>
 <h3 style="margin-bottom: 20px; text-align: center">
   <% if @time_zone == "My Time Zone" %>
-    Poll Time Zone: <%= Time.now.zone %>
+    Poll Time Zone: My Time Zone
   <% else %>
     Poll Time Zone: <%= @time_zone %>
   <% end %>
