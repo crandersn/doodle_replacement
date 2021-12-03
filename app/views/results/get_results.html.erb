@@ -31,25 +31,25 @@
     <td>11:00am-11:30am</td>
     <td>False</td>
   </tbody>
-  <% @timeslots.each do |timeslot| %>
-    <% if timeslot.available == false %>
-      <% @reservers.each do |reserver| %>
+  <%# @timeslots.each do |timeslot| %>
+    <%# if timeslot.available == false %>
+      <% @hash_arr.each do |timeslot| %>
+        <td><%timeslot%></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>False</td>
+        <td>Unknown</td>
         </tr>
       <% end %>
-    <% end %>
-  <% end %>
-  <% @timeslots.each do |timeslot| %>
-    <% if timeslot.available == true %>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>True</td>
-        </tr>
-    <% end %>
-  <% end %>
+    <%# end %>
+  <%# end %>
+  <%# @timeslots.each do |timeslot| %>
+    <%# if timeslot.available == true %>
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td>True</td>-->
+<!--        </tr>-->
+    <%# end %>
+  <%# end %>
   </thead>
 </table>
