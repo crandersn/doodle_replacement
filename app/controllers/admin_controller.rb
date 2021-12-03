@@ -58,6 +58,7 @@ class AdminController < ApplicationController
     id = params["poll_invite"]
     @poll = Poll.find(id)
     @invitees = Invitee.where("poll_id = " + id)
+    @current_user = current_admin.email
     # redirect_to admin_invite_url
   end
 
@@ -99,7 +100,7 @@ class AdminController < ApplicationController
     @invitees.each do |invitee|
 
       begin
-      message_body = 'Hello ' + invitee.name + '! You are invited to vote on this poll: ' + poll.poll_name + ' @ '
+      message_body = 'Hello ' + invitee.name + '! You are invited to vote on this poll: ' + poll.poll_name + ' @ https://ancient-coast-57955.herokuapp.com/poll/vote?poll_identifier=' + poll.id.to_s
       message = @client.messages.create(
         from: '+15052278737',
         body: message_body,

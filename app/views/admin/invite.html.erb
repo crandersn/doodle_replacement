@@ -38,26 +38,26 @@
       <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete_invitee?delete_invitee="+invitee.id.to_s, {class: 'btn btn-danger', type: 'button'} %></td>
     </tr>
     <% end %>
-    <%= form_tag 'add_invitee?poll_add=1', method: :get do %>
 
-  <tr class="active">
-      <td>
-        <%= text_field_tag :name, nil, class: "form-control"%>
-        <label style="font-size:17px;color:grey">Name of Invitee</label>
-      </td>
-      <td>
-        <%= text_field_tag :phone_number, nil, class: "form-control"%>
-        <label style="font-size:17px;color:grey">Ex. Format: (1)5635551234</label>
-      </td>
-      <td><%= button_tag "<span class='glyphicon glyphicon-plus'></span>".html_safe, :class => 'btn btn-primary form-control' %></td>
-    </tr>
+    <form action="/admin/add_invitee" method="get">
+      <tr class="active">
+          <td>
+            <%= text_field_tag :name, nil, class: "form-control"%>
+            <label style="font-size:17px;color:grey">Name of Invitee</label>
+          </td>
+          <td>
+            <%= text_field_tag :phone_number, nil, class: "form-control"%>
+            <label style="font-size:17px;color:grey">Ex. Format: (1)5635551234</label>
+          </td>
+          <td><%= button_tag "<span class='glyphicon glyphicon-plus'></span>".html_safe, :class => 'btn btn-primary form-control' %></td>
+        </tr>
         <%flash[:poll_id] = @poll.id %>
-    <% end %>
+    </form>
 
 </table>
 
 <div>
-  <%flash[:poll_id] = @poll.id %>
+  <%flash[:poll_invite] = @poll.id %>
 
   <%=  button_to 'Send Invites', "send_invites?poll_id="+@poll.id.to_s , {class: 'btn btn-secondary send_invites_button', type: 'button', method: 'get'} %>
 
