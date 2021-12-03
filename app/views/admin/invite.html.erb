@@ -38,7 +38,7 @@
       <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete_invitee?delete_invitee="+invitee.id.to_s, {class: 'btn btn-danger', type: 'button'} %></td>
     </tr>
     <% end %>
-    <%= form_tag 'add_invitee?poll_add=1', method: :get do %>
+    <%= form_tag 'add_invitee', method: :get do %>
 
   <tr class="active">
       <td>
@@ -57,7 +57,7 @@
 </table>
 
 <div>
-  <%flash[:poll_id] = @poll.id %>
+  <%flash[:poll_invite] = @poll.id %>
 
   <%=  button_to 'Send Invites', "send_invites?poll_id="+@poll.id.to_s , {class: 'btn btn-secondary send_invites_button', type: 'button', method: 'get'} %>
 
