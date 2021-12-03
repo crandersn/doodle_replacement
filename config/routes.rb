@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   get 'admin/edit' => 'admin#edit'
   get 'admin/invite' => 'admin#invite'
   get 'admin/delete_invitee' => 'admin#delete_invitee'
-  get 'admin/add_invitee' => 'admin#add_invitee'
-  get 'admin/send_invites' => 'admin#send_invites'
+  post 'admin/add_invitee' => 'admin#add_invitee'
+  post 'admin/send_invites' => 'admin#send_invites'
   get 'admin/log_out' => 'admin#log_out'
 
 

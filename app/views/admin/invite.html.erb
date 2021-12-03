@@ -21,6 +21,9 @@
 
 <h1 class="invite_header"> <%= @poll.poll_name %>'s Invitees</h1>
 
+<%= content_tag :div, id: 'datadiv', class: "poll_id", data: {poll_id: @poll.id.to_s} do %>
+<% end %>
+
 <table id="poll_table" style="width:500px;margin:0 auto;font-size:20px;position:relative;top:-40px" class="table table-striped table-sm">
   <thead>
   <tr>
@@ -39,33 +42,34 @@
     </tr>
     <% end %>
 
-    <form action="/admin/add_invitee" method="get">
+<!--<form action="/admin/add_invitee?poll_id=<%#= @poll.id.to_s %>" method="get">-->
+
       <tr class="active">
           <td>
-            <%= text_field_tag :name, nil, class: "form-control"%>
+            <%= text_field_tag :name, nil, {class: "form-control", id: "name"}%>
             <label style="font-size:17px;color:grey">Name of Invitee</label>
           </td>
           <td>
-            <%= text_field_tag :phone_number, nil, class: "form-control"%>
-            <label style="font-size:17px;color:grey">Ex. Format: (1)5635551234</label>
+            <%= text_field_tag :phone_number, nil, {class: "form-control", id: "phone_number"} %>
+            <label style="font-size:17px;color:grey">Ex. Format: +15635551234</label>
           </td>
-          <td><%= button_tag "<span class='glyphicon glyphicon-plus'></span>".html_safe, :class => 'btn btn-primary form-control' %></td>
+          <td><%= button_tag "<span class='glyphicon glyphicon-plus'></span>".html_safe, {:class => 'btn btn-primary form-control', onclick: "invite()", type: "button"} %></td>
         </tr>
-        <%flash[:poll_id] = @poll.id %>
-    </form>
+        <%#flash[:poll_id] = @poll.id %>
+<!--    </form>-->
 
 </table>
 
 <div>
-  <%flash[:poll_invite] = @poll.id %>
+  <%#flash[:poll_invite] = @poll.id %>
 
-  <%=  button_to 'Send Invites', "send_invites?poll_id="+@poll.id.to_s , {class: 'btn btn-secondary send_invites_button', type: 'button', method: 'get'} %>
+  <%=  button_tag "Send Invites", {class: 'btn btn-secondary send_invites_button', onclick: "sendInvites()" ,type: 'button'} %>
 
 </div>
 
 </body>
 
 
-<% content_for :form_validation_javascript do %>
-  <%= javascript_include_tag "FormValidation.js" %>
+<% content_for :invite_submission_javascript do %>
+  <%= javascript_include_tag "InviteSubmission.js" %>
 <% end %>

@@ -76,7 +76,7 @@ class AdminController < ApplicationController
 
   def add_invitee
 
-    id = flash[:poll_id]
+    id = params[:poll_id]
 
     Invitee.create!(name: params[:name], phone_number: params[:phone_number], poll_id: id)
     redirect_to admin_invite_url(:poll_invite => id)
@@ -87,7 +87,7 @@ class AdminController < ApplicationController
   def send_invites
 
     # test
-    id = flash[:poll_id]
+    id = params[:poll_id]
     @invitees = Invitee.where("poll_id = " + id.to_s)
 
     poll = Poll.find(id)
@@ -99,6 +99,7 @@ class AdminController < ApplicationController
 
     @invitees.each do |invitee|
 
+      puts "sending message"
       begin
       message_body = 'Hello ' + invitee.name + '! You are invited to vote on this poll: ' + poll.poll_name + ' @ https://ancient-coast-57955.herokuapp.com/poll/vote?poll_identifier=' + poll.id.to_s
       message = @client.messages.create(
