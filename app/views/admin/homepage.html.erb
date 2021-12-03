@@ -56,7 +56,8 @@
         <% else %>
           <td><%=poll.deadline%></td>
         <% end %>
-        <td align="right"><button type="button" class="btn btn-primary">View Live Results</button></td>
+<!--        <td align="right"><button type="button" class="btn btn-primary">View Live Results</button></td>-->
+        <td align="right"><%= link_to "View Live Results", results_get_results_url(:poll_id => poll.id) , {class: 'btn btn-primary', type: 'button'} %></td>
         <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
       </tr>
     <% end %>
@@ -70,7 +71,8 @@
         <% else %>
           <td><%=poll.deadline%></td>
         <% end %>
-        <td align="right"><button type="button" class="btn btn-primary">View Final Results</button></td>
+<!--        <td align="right"><button type="button" class="btn btn-primary">View Final Results</button></td>-->
+        <td align="right"><%= link_to "View Final Results", results_get_results_url(:poll_id => poll.id) , {class: 'btn btn-primary', type: 'button'} %></td>
         <td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, "delete?delete_poll="+poll.id.to_s , {class: 'btn btn-danger', type: 'button'} %></td>
       </tr>
     <% end %>
