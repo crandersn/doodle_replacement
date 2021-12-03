@@ -78,10 +78,24 @@ class AdminController < ApplicationController
     id = flash[:poll_id]
 
     Invitee.create!(name: params[:name], phone_number: params[:phone_number], poll_id: id)
-    redirect_to admin_invite_url(:poll_invite => id)
+    redirect_to admin_invite_url(:poll_invites => id)
 
 
   end
+
+  def send_invites
+
+    id = params[:poll_id]
+    @invitees = Invitee.where("poll_id = " + id)
+
+    @invitees.each do |invitee|
+
+    end
+
+    redirect_to homepage
+
+  end
+
 
 
 end

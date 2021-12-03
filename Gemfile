@@ -28,6 +28,9 @@ gem 'rails-erd'
 
 gem 'bootstrap-sass'
 
+# gem 'rubygems'
+gem 'twilio-ruby'
+
 gem 'rails_param'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
