@@ -54,7 +54,7 @@
         <%= text_field_tag :phone_number, nil, class: "form-control"%>
 
 <!--        <input type="text" id="typeText" class="form-control" width="20px"/>-->
-        <label style="font-size:17px;color:grey">Format: (#)###-###-####</label>
+        <label style="font-size:17px;color:grey">Ex. Format: (1)5635551234</label>
       </td>
 <!--      <td><%#= link_to "<span class='glyphicon glyphicon-plus'></span>".html_safe, "add_invitee?poll=" + @poll.id.to_s , {class: 'btn btn-primary', type: 'button'} %></td>-->
       <td><%= button_tag "<span class='glyphicon glyphicon-plus'></span>".html_safe, :class => 'btn btn-primary form-control' %></td>
@@ -69,9 +69,12 @@
 <!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold" type="button" class="btn btn-secondary">CREATE NEW POLL</button></div>-->
 <!--  <div><button style="position:relative;top:100px;left:50%;-ms-transform: translateX(-50%);transform: translateX(-50%);font-weight: bold"type="button" class="btn btn-secondary">test text: <%#= @test %> ?</button></div>-->
 
+<div>
+  <%flash[:poll_id] = @poll.id %>
 
-<%=  button_to 'Send Invites', "send_invites?poll_id="+@poll.id.to_s , {class: 'btn btn-secondary send_invites_button', type: 'button', method: 'get'} %>
+  <%=  button_to 'Send Invites', "send_invites?poll_id="+@poll.id.to_s , {class: 'btn btn-secondary send_invites_button', type: 'button', method: 'get'} %>
 
+</div>
 <%# @polls.each do |poll| %>
 <!--    <p> <%#= poll.poll_name %></p>-->
 <%# end %>

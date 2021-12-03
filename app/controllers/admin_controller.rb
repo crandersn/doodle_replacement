@@ -78,21 +78,37 @@ class AdminController < ApplicationController
     id = flash[:poll_id]
 
     Invitee.create!(name: params[:name], phone_number: params[:phone_number], poll_id: id)
-    redirect_to admin_invite_url(:poll_invites => id)
+    redirect_to admin_invite_url(:poll_invite => id)
 
 
   end
 
   def send_invites
 
-    id = params[:poll_id]
-    @invitees = Invitee.where("poll_id = " + id)
+    id = flash[:poll_id]
+    @invitees = Invitee.where("poll_id = " + id.to_s)
+
+    poll = Poll.find(id)
+
+    account_sid = ENV['ACCOUNT_SID']
+    auth_token = ENV['AUTH_TOKEN']
+
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+
 
     @invitees.each do |invitee|
 
+      message_body = 'Hello ' + invitee.name + '! You are invited to vote on this poll: ' + poll.poll_name + ' @ '
+      message = @client.messages.create(
+        from: '+15052278737',
+        body: message_body,
+        to: invitee.phone_number
+      )
+
+      puts message.sid
     end
 
-    redirect_to homepage
+    redirect_to admin_root_url
 
   end
 
