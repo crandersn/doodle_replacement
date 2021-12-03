@@ -5,10 +5,6 @@ class ResultsController < ApplicationController
     @timeslots = Timeslot.where("poll_id = '#{@poll.id}'")
     @title = @poll.poll_name
 
-    puts ('hi bob')
-    puts(@title)
-    puts (@timeslots)
-
     @hash_arr = []
     @timeslots.each do |timeslot|
       puts timeslot
